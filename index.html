@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Lumina Control — Contrôle DDC-CI multi-moniteurs pour Windows. Mode circadien, gaming automatique, planification horaire, raccourcis globaux." />
+  <title>Lumina Control — Contrôle avancé de vos moniteurs</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:   #60CDFF;
+      --accent2:  #3BA8D8;
+      --bg:       #0D0D0D;
+      --bg2:      #141414;
+      --bg3:      #1A1A1A;
+      --card:     #181818;
+      --border:   rgba(255,255,255,0.07);
+      --text:     #E0E0E0;
+      --subtle:   #888;
+      --radius:   12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Utilitaires ──────────────────────────────────────────────────── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .badge {
+      display: inline-block;
+      background: rgba(96,205,255,0.10);
+      border: 1px solid rgba(96,205,255,0.30);
+      color: var(--accent);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700; color: #fff;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 16px; color: var(--subtle);
+      max-width: 560px; line-height: 1.7;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 17px; font-weight: 700; color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; align-items: center; gap: 28px;
+      font-size: 13px; color: var(--subtle);
+    }
+    .nav-links a { color: var(--subtle); transition: color .2s; }
+    .nav-links a:hover { color: #fff; text-decoration: none; }
+    .btn-nav {
+      background: var(--accent); color: #000;
+      font-size: 13px; font-weight: 700;
+      padding: 8px 20px; border-radius: 8px;
+      transition: opacity .2s;
+    }
+    .btn-nav:hover { opacity: .85; text-decoration: none; }
+
+    /* ── Hero ─────────────────────────────────────────────────────────── */
+    .hero {
+      padding: 96px 0 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-eyebrow { margin-bottom: 20px; }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800; color: #fff;
+      line-height: 1.1; letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero-sub {
+      font-size: 17px; color: var(--subtle);
+      line-height: 1.7; margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
+    .btn-primary {
+      background: var(--accent); color: #000;
+      font-weight: 700; font-size: 15px;
+      padding: 13px 28px; border-radius: 10px;
+      transition: opacity .2s, transform .15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: #ccc; font-size: 15px;
+      padding: 13px 28px; border-radius: 10px;
+      transition: background .2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.10); text-decoration: none; }
+    .hero-note { font-size: 12px; color: #555; }
+    .hero-note span { margin: 0 8px; }
+
+    /* Mockup de l'app */
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+    .app-mockup {
+      background: #1C1C1C;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08);
+    }
+    .mockup-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 18px;
+    }
+    .mockup-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .mockup-title { font-size: 13px; font-weight: 600; color: #fff; }
+    .mockup-sub { font-size: 10px; color: #555; }
+    .monitor-card {
+      background: #242424; border-radius: 10px;
+      padding: 14px; margin-bottom: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .mc-label { font-size: 10px; color: #666; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .mc-name { font-size: 12px; font-weight: 600; color: #ccc; margin-bottom: 12px; }
+    .slider-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .slider-lbl { font-size: 10px; color: #555; width: 24px; }
+    .slider-track {
+      flex: 1; height: 4px; background: #333; border-radius: 2px; position: relative;
+    }
+    .slider-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+    }
+    .slider-val { font-size: 10px; color: #888; width: 28px; text-align: right; }
+    .mockup-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(96,205,255,0.10); border: 1px solid rgba(96,205,255,0.20);
+      border-radius: 6px; padding: 5px 10px;
+      font-size: 10px; color: var(--accent); font-weight: 600;
+      margin-top: 4px;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* ── Logos / OS ───────────────────────────────────────────────────── */
+    .os-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      text-align: center;
+    }
+    .os-strip p { font-size: 12px; color: #444; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ── Features ─────────────────────────────────────────────────────── */
+    .features { padding: 96px 0; }
+    .features-header { text-align: center; margin-bottom: 60px; }
+    .features-header .section-sub { margin: 0 auto; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color .2s, transform .2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(96,205,255,0.25);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      font-size: 28px; margin-bottom: 16px; display: block;
+    }
+    .feature-title {
+      font-size: 15px; font-weight: 700; color: #fff;
+      margin-bottom: 8px;
+    }
+    .feature-desc { font-size: 13px; color: var(--subtle); line-height: 1.6; }
+
+    /* ── Comparaison ──────────────────────────────────────────────────── */
+    .comparison { padding: 80px 0; background: var(--bg2); }
+    .comparison-header { text-align: center; margin-bottom: 48px; }
+    .comparison-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 14px;
+    }
+    .comparison-table th {
+      padding: 14px 20px; text-align: left;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--subtle);
+      border-bottom: 1px solid var(--border);
+    }
+    .comparison-table th.col-lumina { color: var(--accent); }
+    .comparison-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      color: #bbb;
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .check { color: var(--accent); font-weight: 700; }
+    .cross { color: #444; }
+    .col-lumina { background: rgba(96,205,255,0.04); }
+
+    /* ── Pricing ──────────────────────────────────────────────────────── */
+    .pricing { padding: 96px 0; text-align: center; }
+    .pricing-card {
+      max-width: 420px; margin: 48px auto 0;
+      background: var(--card);
+      border: 1px solid rgba(96,205,255,0.20);
+      border-radius: 16px; padding: 40px;
+      box-shadow: 0 0 60px rgba(96,205,255,0.06);
+    }
+    .pricing-plan { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .pricing-price { font-size: 52px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 6px; }
+    .pricing-price sup { font-size: 24px; vertical-align: super; }
+    .pricing-once { font-size: 12px; color: var(--subtle); margin-bottom: 32px; }
+    .pricing-features { list-style: none; text-align: left; margin-bottom: 32px; }
+    .pricing-features li {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px; color: #ccc;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    .pricing-features li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+    .btn-buy {
+      display: block; width: 100%;
+      background: var(--accent); color: #000;
+      font-weight: 700; font-size: 16px;
+      padding: 15px; border-radius: 10px;
+      transition: opacity .2s, transform .15s;
+      text-align: center;
+    }
+    .btn-buy:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
+    .pricing-note { font-size: 11px; color: #444; margin-top: 16px; }
+
+    /* ── FAQ ──────────────────────────────────────────────────────────── */
+    .faq { padding: 80px 0; background: var(--bg2); }
+    .faq-header { text-align: center; margin-bottom: 48px; }
+    .faq-grid { max-width: 720px; margin: 0 auto; display: grid; gap: 16px; }
+    .faq-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 28px;
+    }
+    .faq-q { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+    .faq-a { font-size: 14px; color: var(--subtle); line-height: 1.7; }
+    .faq-a code {
+      background: rgba(255,255,255,0.07); border-radius: 4px;
+      padding: 1px 6px; font-size: 12px; font-family: 'Consolas', monospace;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0; text-align: center;
+      font-size: 12px; color: #444;
+    }
+    footer a { color: #555; }
+    footer a:hover { color: #999; }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 64px 0 48px; }
+      .hero-visual { order: -1; }
+      .features-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .comparison-table td:nth-child(3),
+      .comparison-table th:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────────────── -->
+<nav>
+  <div class="container nav-inner">
+    <div class="nav-logo">Lumina<span>Control</span></div>
+    <div class="nav-links">
+      <a href="#features">Fonctionnalités</a>
+      <a href="#comparison">Comparatif</a>
+      <a href="#pricing">Tarif</a>
+      <a href="#faq">FAQ</a>
+      <!-- REMPLACER l'URL par ton lien LemonSqueezy -->
+      <a href="#pricing" class="btn-nav">Acheter</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── Hero ────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container" style="display:contents">
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="badge">Windows 10 / 11 · DDC-CI</span>
+      </div>
+      <h1>Vos moniteurs,<br><em>à votre rythme</em></h1>
+      <p class="hero-sub">
+        Contrôle DDC-CI multi-écrans, mode circadien calé sur le soleil,
+        gaming automatique et planification horaire. Tout ça, hors ligne et sans abonnement.
+      </p>
+      <div class="hero-actions">
+        <!-- REMPLACER l'URL par ton lien LemonSqueezy -->
+        <a href="#pricing" class="btn-primary">Acheter — XX€</a>
+        <a href="#features" class="btn-secondary">Voir les fonctionnalités</a>
+      </div>
+      <div class="hero-note">
+        Activation hors ligne
+        <span>·</span>
+        Paiement unique
+        <span>·</span>
+        Mises à jour incluses
+        <span>·</span>
+        FR / EN
+      </div>
+    </div>
+
+    <!-- Mockup CSS de l'app -->
+    <div class="hero-visual">
+      <div class="app-mockup">
+        <div class="mockup-header">
+          <div class="mockup-icon">💡</div>
+          <div>
+            <div class="mockup-title">Lumina Control</div>
+            <div class="mockup-sub">2 moniteurs détectés</div>
+          </div>
+        </div>
+
+        <div class="monitor-card">
+          <div class="mc-label">Écran 1 · Principal</div>
+          <div class="mc-name">DELL U2722D</div>
+          <div class="slider-row">
+            <div class="slider-lbl">Bri</div>
+            <div class="slider-track"><div class="slider-fill" style="width:72%"></div></div>
+            <div class="slider-val">72%</div>
+          </div>
+          <div class="slider-row">
+            <div class="slider-lbl">Con</div>
+            <div class="slider-track"><div class="slider-fill" style="width:55%"></div></div>
+            <div class="slider-val">55%</div>
+          </div>
+        </div>
+
+        <div class="monitor-card">
+          <div class="mc-label">Écran 2 · Gauche</div>
+          <div class="mc-name">LG 27UK850</div>
+          <div class="slider-row">
+            <div class="slider-lbl">Bri</div>
+            <div class="slider-track"><div class="slider-fill" style="width:65%"></div></div>
+            <div class="slider-val">65%</div>
+          </div>
+          <div class="slider-row">
+            <div class="slider-lbl">Con</div>
+            <div class="slider-track"><div class="slider-fill" style="width:55%"></div></div>
+            <div class="slider-val">55%</div>
+          </div>
+        </div>
+
+        <div class="mockup-badge">
+          <div class="dot"></div>
+          Mode circadien actif · Coucher 20:27
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── OS Strip ─────────────────────────────────────────────────────────────── -->
+<div class="os-strip">
+  <div class="container">
+    <p>Compatible Windows 10 &amp; 11 · Fonctionne avec tous les moniteurs DDC-CI</p>
+  </div>
+</div>
+
+
+<!-- ── Features ────────────────────────────────────────────────────────────── -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="features-header">
+      <p class="section-label">Fonctionnalités</p>
+      <h2 class="section-title">Tout ce que Twinkle Tray<br>ne fait pas</h2>
+      <p class="section-sub">
+        Lumina Control va bien au-delà du curseur de luminosité.
+        Automatisation, gaming, règles par app — le contrôle complet.
+      </p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <span class="feature-icon">🌅</span>
+        <div class="feature-title">Mode circadien</div>
+        <div class="feature-desc">
+          Synchronise automatiquement la luminosité et la teinte chaude
+          avec le lever et le coucher du soleil de votre ville.
+          Courbe sinusoïdale invisible, sans saut brutal.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🎮</span>
+        <div class="feature-title">Mode Gaming automatique</div>
+        <div class="feature-desc">
+          Détecte le passage en plein écran et applique instantanément
+          votre preset gaming. Retour automatique à l'arrêt. Activable
+          aussi via <code>Ctrl+Alt+G</code> sans alt-tabber.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⏰</span>
+        <div class="feature-title">Planification horaire</div>
+        <div class="feature-desc">
+          Appliquez un profil nommé sur une plage horaire précise —
+          par ex. <em>"de 22h à 7h, passer en mode Cinéma"</em>.
+          Gestion des jours de la semaine et minuit inclus.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📋</span>
+        <div class="feature-title">Règles par application</div>
+        <div class="feature-desc">
+          Chaque appli a son profil. Détection par nom de processus
+          et par titre de fenêtre (regex) : VLC en lecture ≠ VLC en pause.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <div class="feature-title">Mode Focus</div>
+        <div class="feature-desc">
+          Dim automatiquement les écrans inactifs pour garder
+          votre attention sur la fenêtre en cours.
+          Délai configurable de 0 à 5 secondes.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⌨️</span>
+        <div class="feature-title">Raccourcis globaux</div>
+        <div class="feature-desc">
+          <code>Ctrl+Alt+↑↓</code> luminosité,
+          <code>Ctrl+Alt+F</code> Focus,
+          <code>Ctrl+Alt+G</code> Gaming,
+          <code>Ctrl+Alt+N</code> Nuit.
+          Fonctionnent depuis n'importe quelle application.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🎨</span>
+        <div class="feature-title">Calibrage RGB</div>
+        <div class="feature-desc">
+          Assistant de calibrage en 6 étapes avec mires de test.
+          Ajustement des gains rouge, vert et bleu par DDC-CI
+          ou via la LUT gamma GDI32.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">💾</span>
+        <div class="feature-title">Profils nommés</div>
+        <div class="feature-desc">
+          Sauvegardez l'état complet de tous vos écrans sous un nom
+          personnalisé. Rechargez en un clic depuis la barre des tâches.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔒</span>
+        <div class="feature-title">100% hors ligne</div>
+        <div class="feature-desc">
+          Aucune donnée envoyée. Activation par clé cryptographique locale.
+          Fonctionne sans connexion internet, même pour les mises à jour
+          de configuration.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Comparaison ──────────────────────────────────────────────────────────── -->
+<section class="comparison" id="comparison">
+  <div class="container">
+    <div class="comparison-header">
+      <p class="section-label">Comparatif</p>
+      <h2 class="section-title">Pourquoi pas Twinkle Tray ?</h2>
+      <p class="section-sub" style="margin:0 auto">
+        Twinkle Tray est excellent pour le basique. Lumina Control est fait
+        pour ceux qui veulent l'automatisation complète.
+      </p>
+    </div>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th style="width:45%">Fonctionnalité</th>
+          <th class="col-lumina">Lumina Control</th>
+          <th>Twinkle Tray</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Contrôle DDC-CI multi-écrans</td>
+          <td class="col-lumina check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Mode circadien (lever/coucher du soleil)</td>
+          <td class="col-lumina check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Planification horaire par profil</td>
+          <td class="col-lumina check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Mode Gaming à détection automatique</td>
+          <td class="col-lumina check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Règles par application + titre de fenêtre</td>
+          <td class="col-lumina check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Mode Focus (dim les écrans inactifs)</td>
+          <td class="col-lumina check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Raccourcis globaux configurables</td>
+          <td class="col-lumina check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Assistant de calibrage RGB 6 étapes</td>
+          <td class="col-lumina check">✓</td>
+          <td class="cross">✗</td>
+        </tr>
+        <tr>
+          <td>Activation hors ligne (pas de compte)</td>
+          <td class="col-lumina check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Prix</td>
+          <td class="col-lumina" style="color:#fff;font-weight:700">XX€ une fois</td>
+          <td style="color:var(--subtle)">Gratuit</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ── Pricing ──────────────────────────────────────────────────────────────── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <p class="section-label">Tarif</p>
+    <h2 class="section-title">Simple. Une fois pour toutes.</h2>
+    <p class="section-sub" style="margin:0 auto">
+      Pas d'abonnement. Pas de compte en ligne. Vous payez une fois, vous utilisez à vie.
+    </p>
+
+    <div class="pricing-card">
+      <div class="pricing-plan">Licence Pro</div>
+      <!-- REMPLACER XX par le prix réel -->
+      <div class="pricing-price"><sup>€</sup>XX</div>
+      <div class="pricing-once">Paiement unique — licence à vie</div>
+
+      <ul class="pricing-features">
+        <li>Toutes les fonctionnalités incluses</li>
+        <li>Mises à jour gratuites</li>
+        <li>Activation hors ligne (jusqu'à 2 machines)</li>
+        <li>Support par email</li>
+        <li>Windows 10 &amp; 11 (64-bit)</li>
+      </ul>
+
+      <!-- REMPLACER par ton URL LemonSqueezy -->
+      <a href="https://VOTRE_STORE.lemonsqueezy.com/checkout/buy/PRODUCT_ID"
+         class="btn-buy">Acheter maintenant</a>
+      <div class="pricing-note">Paiement sécurisé via LemonSqueezy · CB, PayPal</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FAQ ──────────────────────────────────────────────────────────────────── -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-header">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Questions fréquentes</h2>
+    </div>
+
+    <div class="faq-grid">
+
+      <div class="faq-item">
+        <div class="faq-q">Mon moniteur est-il compatible ?</div>
+        <div class="faq-a">
+          Lumina Control fonctionne avec tous les moniteurs qui supportent le protocole
+          <strong>DDC-CI</strong> (la quasi-totalité des écrans de bureau modernes).
+          Assurez-vous que DDC-CI est activé dans le menu OSD de votre moniteur.
+          Les écrans laptop (LCD intégrés) ne sont pas supportés.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Puis-je l'utiliser sur plusieurs PC ?</div>
+        <div class="faq-a">
+          La licence Pro autorise l'installation sur <strong>2 machines</strong>
+          simultanément. Si vous changez de PC, contactez le support pour une réactivation.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Ça fonctionne avec HDR ?</div>
+        <div class="faq-a">
+          Le contrôle DDC-CI est désactivé par Windows lorsque HDR est actif sur un moniteur.
+          Lumina Control utilise alors la LUT gamma GDI32 pour les ajustements de teinte et gamma,
+          mais la luminosité DDC-CI ne sera pas disponible tant que HDR est activé.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Est-ce qu'il y a un essai gratuit ?</div>
+        <div class="faq-a">
+          Pas d'essai pour le moment. Si le logiciel ne fonctionne pas correctement
+          sur votre configuration dans les 7 jours suivant l'achat, contactez le support
+          pour un remboursement complet.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Quelle différence avec le mode nuit de Windows ?</div>
+        <div class="faq-a">
+          Le mode nuit de Windows est une surcouche logicielle qui teinte l'écran en orange.
+          Lumina Control agit directement sur le <strong>firmware du moniteur</strong> via DDC-CI :
+          la luminosité physique baisse réellement, ce qui réduit la fatigue oculaire et
+          la consommation électrique. Aucune surcouche, aucune dégradation des couleurs.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Footer ───────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <p style="margin-bottom:8px">
+      <strong style="color:#888">LuminaControl</strong>
+      &nbsp;·&nbsp;
+      <!-- REMPLACER par ton email de support -->
+      <a href="mailto:support@tondomaine.com">support@tondomaine.com</a>
+    </p>
+    <p>© 2026 Lumina Control · Tous droits réservés</p>
+  </div>
+</footer>
+
+</body>
+</html>
