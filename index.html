@@ -112,8 +112,37 @@
     .hero-note { font-size: 12px; color: #555; }
     .hero-note span { margin: 0 8px; }
 
+    /* ── View toggle ──────────────────────────────────────────────────── */
+    .hero-visual { display: flex; justify-content: center; align-items: flex-start; }
+    .hero-visual-wrap { width: 100%; max-width: 340px; }
+    .view-toggle {
+      display: flex; gap: 4px; margin-bottom: 12px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 10px; padding: 4px;
+    }
+    .view-btn {
+      flex: 1; font-size: 11px; font-weight: 700; padding: 7px 10px;
+      border-radius: 7px; border: none; cursor: pointer;
+      background: transparent; color: #555; transition: all .2s;
+    }
+    .view-btn:hover { color: #aaa; }
+    .view-btn.active { background: var(--card); color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+    .video-frame {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08);
+    }
+    .video-frame-bar {
+      background: #141414; border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .vf-dots { display: flex; gap: 6px; }
+    .vf-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .vf-dot.r { background: #FF5F57; } .vf-dot.y { background: #FEBC2E; } .vf-dot.g { background: #28C840; }
+    .vf-title { font-size: 12px; color: #555; }
+    .video-frame video { display: block; width: 100%; height: auto; }
+
     /* ── Interactive mockup ───────────────────────────────────────────── */
-    .hero-visual { display: flex; justify-content: center; align-items: center; }
     .int-mockup {
       background: #1C1C1C; border: 1px solid rgba(255,255,255,0.10);
       border-radius: 16px; overflow: hidden; width: 100%; max-width: 320px;
@@ -418,6 +447,13 @@
     </div>
 
     <div class="hero-visual">
+      <div class="hero-visual-wrap">
+        <div class="view-toggle">
+          <button class="view-btn active" id="btn-interactive">⚡ Interactif</button>
+          <button class="view-btn" id="btn-video">▶ Vidéo démo</button>
+        </div>
+
+        <div id="view-interactive">
       <div class="int-mockup">
         <div class="int-bar">
           <div class="int-dots">
@@ -495,6 +531,25 @@
         </div>
         <div class="int-hint">↑ Essayez les modes</div>
       </div>
+        </div>
+
+        <div id="view-video" style="display:none">
+          <div class="video-frame">
+            <div class="video-frame-bar">
+              <div class="vf-dots">
+                <span class="vf-dot r"></span>
+                <span class="vf-dot y"></span>
+                <span class="vf-dot g"></span>
+              </div>
+              <span class="vf-title">Lumina Control — Démo</span>
+            </div>
+            <video autoplay loop muted playsinline id="demo-video">
+              <source src="demo.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+
+      </div><!-- .hero-visual-wrap -->
     </div>
 
   </div>
@@ -870,6 +925,24 @@
     tick(); setInterval(tick, 10000);
 
     update();
+
+    // Toggle interactif / vidéo
+    var btnI = document.getElementById('btn-interactive');
+    var btnV = document.getElementById('btn-video');
+    var viewI = document.getElementById('view-interactive');
+    var viewV = document.getElementById('view-video');
+    var vid   = document.getElementById('demo-video');
+
+    btnI.addEventListener('click', function() {
+      viewI.style.display = ''; viewV.style.display = 'none';
+      btnI.classList.add('active'); btnV.classList.remove('active');
+      vid.pause();
+    });
+    btnV.addEventListener('click', function() {
+      viewI.style.display = 'none'; viewV.style.display = '';
+      btnV.classList.add('active'); btnI.classList.remove('active');
+      vid.play();
+    });
   })();
 </script>
 </body>
