@@ -111,38 +111,25 @@
     .hero-note { font-size: 12px; color: #555; }
     .hero-note span { margin: 0 8px; }
 
-    /* Mockup */
+    /* Video frame */
     .hero-visual { display: flex; justify-content: center; align-items: center; }
-    .app-mockup {
-      background: #1C1C1C; border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px; padding: 20px; width: 300px;
+    .video-frame {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
       box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08);
+      width: 100%; max-width: 460px;
     }
-    .mockup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-    .mockup-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    .video-frame-bar {
+      background: #1C1C1C; border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 10px 14px; display: flex; align-items: center; gap: 10px;
     }
-    .mockup-title { font-size: 13px; font-weight: 600; color: #fff; }
-    .mockup-sub { font-size: 10px; color: #555; }
-    .monitor-card {
-      background: #242424; border-radius: 10px; padding: 14px; margin-bottom: 10px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .mc-label { font-size: 10px; color: #666; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
-    .mc-name { font-size: 12px; font-weight: 600; color: #ccc; margin-bottom: 12px; }
-    .slider-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .slider-lbl { font-size: 10px; color: #555; width: 24px; }
-    .slider-track { flex: 1; height: 4px; background: #333; border-radius: 2px; }
-    .slider-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent2), var(--accent)); }
-    .slider-val { font-size: 10px; color: #888; width: 28px; text-align: right; }
-    .mockup-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: rgba(96,205,255,0.10); border: 1px solid rgba(96,205,255,0.20);
-      border-radius: 6px; padding: 5px 10px;
-      font-size: 10px; color: var(--accent); font-weight: 600; margin-top: 4px;
-    }
+    .vf-dots { display: flex; gap: 6px; }
+    .vf-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .vf-dot.r { background: #FF5F57; }
+    .vf-dot.y { background: #FEBC2E; }
+    .vf-dot.g { background: #28C840; }
+    .vf-title { font-size: 12px; color: #555; font-weight: 500; }
+    .video-frame video { display: block; width: 100%; height: auto; }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
@@ -327,7 +314,6 @@
   <div class="container nav-inner">
     <div class="nav-logo">Lumina<span>Control</span></div>
     <div class="nav-links">
-      <a href="#demo">Démo</a>
       <a href="#features">Fonctionnalités</a>
       <a href="#comparison">Comparatif</a>
       <a href="#pricing">Tarif</a>
@@ -361,46 +347,18 @@
     </div>
 
     <div class="hero-visual">
-      <div class="app-mockup">
-        <div class="mockup-header">
-          <div class="mockup-icon">💡</div>
-          <div>
-            <div class="mockup-title">Lumina Control</div>
-            <div class="mockup-sub">2 moniteurs détectés</div>
+      <div class="video-frame">
+        <div class="video-frame-bar">
+          <div class="vf-dots">
+            <span class="vf-dot r"></span>
+            <span class="vf-dot y"></span>
+            <span class="vf-dot g"></span>
           </div>
+          <span class="vf-title">Lumina Control</span>
         </div>
-        <div class="monitor-card">
-          <div class="mc-label">Écran 1 · Principal</div>
-          <div class="mc-name">DELL U2722D</div>
-          <div class="slider-row">
-            <div class="slider-lbl">Bri</div>
-            <div class="slider-track"><div class="slider-fill" style="width:72%"></div></div>
-            <div class="slider-val">72%</div>
-          </div>
-          <div class="slider-row">
-            <div class="slider-lbl">Con</div>
-            <div class="slider-track"><div class="slider-fill" style="width:55%"></div></div>
-            <div class="slider-val">55%</div>
-          </div>
-        </div>
-        <div class="monitor-card">
-          <div class="mc-label">Écran 2 · Gauche</div>
-          <div class="mc-name">LG 27UK850</div>
-          <div class="slider-row">
-            <div class="slider-lbl">Bri</div>
-            <div class="slider-track"><div class="slider-fill" style="width:65%"></div></div>
-            <div class="slider-val">65%</div>
-          </div>
-          <div class="slider-row">
-            <div class="slider-lbl">Con</div>
-            <div class="slider-track"><div class="slider-fill" style="width:55%"></div></div>
-            <div class="slider-val">55%</div>
-          </div>
-        </div>
-        <div class="mockup-badge">
-          <div class="dot"></div>
-          Mode circadien actif · Coucher 20:27
-        </div>
+        <video autoplay loop muted playsinline>
+          <source src="demo.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
 
@@ -415,26 +373,6 @@
   </div>
 </div>
 
-
-<!-- ── Démo vidéo ───────────────────────────────────────────────────────────── -->
-<section class="demo" id="demo">
-  <div class="container">
-    <div class="demo-header">
-      <p class="section-label">Démo</p>
-      <h2 class="section-title">Voyez l'app en action</h2>
-      <p class="section-sub">
-        Contrôle en temps réel, mode circadien, gaming automatique —
-        tout ce que vous obtenez pour 4€.
-      </p>
-    </div>
-    <div class="demo-video-wrap">
-      <video autoplay loop muted playsinline>
-        <source src="demo.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <p class="demo-caption">Lumina Control v1.2 · Windows 11</p>
-  </div>
-</section>
 
 
 <!-- ── Features ────────────────────────────────────────────────────────────── -->
