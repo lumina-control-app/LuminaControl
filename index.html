@@ -174,6 +174,33 @@
       padding: 8px 16px; font-size: 10px; color: #60CDFF; font-weight: 600;
     }
     .int-hint { font-size: 10px; color: #3a3a3a; text-align: center; padding: 5px 16px 12px; }
+    /* Modes */
+    .int-modes { display: flex; gap: 6px; padding: 10px 16px 0; }
+    .int-mode {
+      flex: 1; font-size: 10px; font-weight: 700; text-align: center;
+      padding: 5px 4px; border-radius: 6px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.08); color: #555;
+      background: transparent; transition: all .2s; user-select: none;
+    }
+    .int-mode:hover { color: #aaa; border-color: rgba(255,255,255,0.15); }
+    .int-mode.active { background: rgba(96,205,255,0.12); border-color: rgba(96,205,255,0.35); color: #60CDFF; }
+    .int-mode.active.gaming { background: rgba(255,60,60,0.12); border-color: rgba(255,80,80,0.35); color: #FF6060; }
+    /* Gaming state */
+    .int-mockup.gaming { border-color: rgba(255,60,60,0.35); box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,60,60,0.12); }
+    .int-mockup.gaming .int-status { background: rgba(255,60,60,0.08); border-color: rgba(255,60,60,0.20); color: #FF6060; }
+    .int-mockup.gaming .dot { background: #FF6060; }
+    /* Focus mode — 2e moniteur */
+    .int-card2 { padding: 0 16px 10px; display: none; }
+    .int-card2.visible { display: block; }
+    .int-card2-inner {
+      background: #171717; border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px; padding: 10px 12px; opacity: 0.5;
+    }
+    .int-card2-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .int-dim-badge {
+      font-size: 9px; color: #555; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 4px; padding: 2px 7px;
+    }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
@@ -416,10 +443,17 @@
           </div>
         </div>
 
+        <div class="int-modes">
+          <div class="int-mode active" data-mode="normal">Normal</div>
+          <div class="int-mode" data-mode="nuit">🌙 Nuit</div>
+          <div class="int-mode" data-mode="gaming">🎮 Gaming</div>
+          <div class="int-mode" data-mode="focus">🎯 Focus</div>
+        </div>
+
         <div class="int-card">
           <div class="int-card-header">
             <span class="int-mon-name">DELL U2722D</span>
-            <span class="int-mon-pos">Principal</span>
+            <span class="int-mon-pos" id="mon-pos">Principal</span>
           </div>
           <div class="int-row">
             <span class="int-lbl">Bri</span>
@@ -441,11 +475,25 @@
           </div>
         </div>
 
-        <div class="int-status">
-          <div class="dot"></div>
-          Mode circadien actif · Coucher 20:27
+        <div class="int-card2" id="card2">
+          <div class="int-card2-inner">
+            <div class="int-card2-header">
+              <span style="font-size:11px;font-weight:700;color:#555">LG 27UK850</span>
+              <span class="int-dim-badge">Atténué — Focus</span>
+            </div>
+            <div class="int-row" style="margin-bottom:0">
+              <span class="int-lbl">Bri</span>
+              <div style="flex:1;height:4px;border-radius:2px;background:linear-gradient(90deg,#333 30%,#222 30%)"></div>
+              <span class="int-val">30%</span>
+            </div>
+          </div>
         </div>
-        <div class="int-hint">↑ Essayez les curseurs</div>
+
+        <div class="int-status" id="int-status">
+          <div class="dot"></div>
+          <span id="status-text">Mode circadien actif · Coucher 20:27</span>
+        </div>
+        <div class="int-hint">↑ Essayez les modes</div>
       </div>
     </div>
 
@@ -721,36 +769,47 @@
 
 <script>
   (function() {
-    var screen  = document.getElementById('demo-screen');
-    var sBri    = document.getElementById('s-bri');
-    var sCon    = document.getElementById('s-con');
-    var sWarm   = document.getElementById('s-warm');
-    var vBri    = document.getElementById('v-bri');
-    var vCon    = document.getElementById('v-con');
-    var vWarm   = document.getElementById('v-warm');
+    var mockup     = document.querySelector('.int-mockup');
+    var screen     = document.getElementById('demo-screen');
+    var sBri       = document.getElementById('s-bri');
+    var sCon       = document.getElementById('s-con');
+    var sWarm      = document.getElementById('s-warm');
+    var vBri       = document.getElementById('v-bri');
+    var vCon       = document.getElementById('v-con');
+    var vWarm      = document.getElementById('v-warm');
+    var card2      = document.getElementById('card2');
+    var statusText = document.getElementById('status-text');
+    var modes      = document.querySelectorAll('.int-mode');
 
-    function pct(v, min, max) { return Math.round((v - min) / (max - min) * 100); }
+    var MODES = {
+      normal: { bri:72,  con:55, warm:0,  status:'Mode circadien actif · Coucher 20:27', gaming:false, focus:false },
+      nuit:   { bri:25,  con:45, warm:75, status:'🌙 Mode Nuit · Chaleur max', gaming:false, focus:false },
+      gaming: { bri:90,  con:80, warm:0,  status:'🎮 Mode Gaming · Preset appliqué', gaming:true,  focus:false },
+      focus:  { bri:80,  con:55, warm:10, status:'🎯 Focus · Écran inactif atténué à 30%', gaming:false, focus:true  },
+    };
+
+    function setSlider(slider, val) {
+      slider.value = val;
+    }
 
     function update() {
       var bri  = parseInt(sBri.value);
       var con  = parseInt(sCon.value);
       var warm = parseInt(sWarm.value);
 
-      // Mise à jour labels
       vBri.textContent  = bri  + '%';
       vCon.textContent  = con  + '%';
       vWarm.textContent = warm + '%';
 
-      // Mise à jour couleur des tracks
-      sBri.style.background  = 'linear-gradient(90deg,#3BA8D8 ' + bri  + '%,#333 ' + bri  + '%)';
-      sCon.style.background  = 'linear-gradient(90deg,#3BA8D8 ' + con  + '%,#333 ' + con  + '%)';
+      var accent = mockup.classList.contains('gaming') ? '#FF6060' : '#3BA8D8';
+      sBri.style.background  = 'linear-gradient(90deg,' + accent + ' ' + bri  + '%,#333 ' + bri  + '%)';
+      sCon.style.background  = 'linear-gradient(90deg,' + accent + ' ' + con  + '%,#333 ' + con  + '%)';
       sWarm.style.background = 'linear-gradient(90deg,#FFA040 ' + warm + '%,#333 ' + warm + '%)';
 
-      // Calcul du filtre CSS sur l'écran simulé
-      var brightness = (bri  / 100) * 1.0 + 0.05;
-      var contrast   = 0.6 + (con / 100) * 0.8;
+      var brightness = (bri  / 100) * 0.95 + 0.05;
+      var contrast   = 0.6 + (con  / 100) * 0.8;
       var sepia      = (warm / 100) * 0.75;
-      var saturate   = 1 + (warm / 100) * 0.5;
+      var saturate   = 1   + (warm / 100) * 0.5;
 
       screen.style.filter =
         'brightness(' + brightness.toFixed(2) + ') ' +
@@ -759,19 +818,58 @@
         'saturate('   + saturate.toFixed(2)    + ')';
     }
 
+    function applyMode(name) {
+      var m = MODES[name];
+      // Transition douce sur les sliders
+      var steps = 12, step = 0;
+      var fromBri = parseInt(sBri.value), fromCon = parseInt(sCon.value), fromWarm = parseInt(sWarm.value);
+      clearInterval(window._modeTimer);
+      window._modeTimer = setInterval(function() {
+        step++;
+        var t = step / steps;
+        sBri.value  = Math.round(fromBri  + (m.bri  - fromBri)  * t);
+        sCon.value  = Math.round(fromCon  + (m.con  - fromCon)  * t);
+        sWarm.value = Math.round(fromWarm + (m.warm - fromWarm) * t);
+        update();
+        if (step >= steps) clearInterval(window._modeTimer);
+      }, 25);
+
+      // Gaming state
+      mockup.classList.toggle('gaming', m.gaming);
+
+      // Focus — 2e moniteur
+      card2.classList.toggle('visible', m.focus);
+
+      // Status
+      statusText.textContent = m.status;
+
+      // Boutons actifs
+      modes.forEach(function(btn) {
+        btn.classList.remove('active', 'gaming');
+        if (btn.dataset.mode === name) {
+          btn.classList.add('active');
+          if (m.gaming) btn.classList.add('gaming');
+        }
+      });
+    }
+
+    modes.forEach(function(btn) {
+      btn.addEventListener('click', function() { applyMode(btn.dataset.mode); });
+    });
+
     sBri.addEventListener('input',  update);
     sCon.addEventListener('input',  update);
     sWarm.addEventListener('input', update);
 
-    // Horloge en temps réel
+    // Horloge
     function tick() {
       var now = new Date();
-      var h = String(now.getHours()).padStart(2,'0');
-      var m = String(now.getMinutes()).padStart(2,'0');
-      document.getElementById('demo-clock').textContent = h + ':' + m;
+      document.getElementById('demo-clock').textContent =
+        String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
     }
-    tick();
-    setInterval(tick, 10000);
+    tick(); setInterval(tick, 10000);
+
+    update();
   })();
 </script>
 </body>
