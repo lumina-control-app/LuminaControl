@@ -233,6 +233,79 @@
     .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
+    /* ── Compat checker (auto-détection) ─────────────────────────────── */
+    .compat { padding: 80px 0; background: var(--bg2); }
+    .compat-header { text-align: center; margin-bottom: 40px; }
+    .compat-header .section-sub { margin: 0 auto; }
+    .compat-box {
+      max-width: 580px; margin: 0 auto;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 36px;
+    }
+    /* Scan animation */
+    .compat-scanning {
+      text-align: center; padding: 12px 0 4px;
+    }
+    .compat-scan-ring {
+      width: 52px; height: 52px; margin: 0 auto 16px;
+      border: 3px solid rgba(96,205,255,0.12);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: cspin .7s linear infinite;
+    }
+    @keyframes cspin { to { transform: rotate(360deg); } }
+    .compat-scan-label { font-size: 14px; color: var(--subtle); }
+    /* Signals list */
+    .compat-signals { display: none; }
+    .compat-signal-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity .3s, transform .3s;
+    }
+    .compat-signal-row:last-child { border-bottom: none; }
+    .compat-signal-row.visible { opacity: 1; transform: none; }
+    .compat-signal-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+      background: rgba(255,255,255,0.04);
+    }
+    .compat-signal-icon.ok { background: rgba(96,205,255,0.10); color: var(--accent); }
+    .compat-signal-icon.warn { background: rgba(255,160,64,0.10); color: #FFA040; }
+    .compat-signal-icon.no { background: rgba(255,96,96,0.10); color: #FF6060; }
+    .compat-signal-text { flex: 1; }
+    .compat-signal-label { font-size: 13px; font-weight: 600; color: #ccc; }
+    .compat-signal-value { font-size: 12px; color: var(--subtle); margin-top: 1px; }
+    .compat-signal-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .compat-signal-badge.ok { background: rgba(96,205,255,0.10); border: 1px solid rgba(96,205,255,0.25); color: var(--accent); }
+    .compat-signal-badge.warn { background: rgba(255,160,64,0.10); border: 1px solid rgba(255,160,64,0.25); color: #FFA040; }
+    .compat-signal-badge.no { background: rgba(255,96,96,0.10); border: 1px solid rgba(255,96,96,0.25); color: #FF6060; }
+    /* Verdict */
+    .compat-verdict {
+      margin-top: 24px; padding: 18px 20px; border-radius: 12px;
+      border: 1px solid rgba(96,205,255,0.20);
+      background: rgba(96,205,255,0.04);
+      display: none; opacity: 0; transition: opacity .4s;
+    }
+    .compat-verdict.ok  { border-color: rgba(96,205,255,0.25); background: rgba(96,205,255,0.05); }
+    .compat-verdict.warn { border-color: rgba(255,160,64,0.25); background: rgba(255,160,64,0.05); }
+    .compat-verdict.no  { border-color: rgba(255,96,96,0.25); background: rgba(255,96,96,0.05); }
+    .compat-verdict-title {
+      font-size: 15px; font-weight: 700; margin-bottom: 6px;
+    }
+    .compat-verdict.ok  .compat-verdict-title { color: var(--accent); }
+    .compat-verdict.warn .compat-verdict-title { color: #FFA040; }
+    .compat-verdict.no  .compat-verdict-title { color: #FF6060; }
+    .compat-verdict-sub { font-size: 13px; color: var(--subtle); line-height: 1.6; }
+    .compat-disclaimer { font-size: 11px; color: #3a3a3a; margin-top: 16px; text-align: center; }
+    .compat-recheck { font-size: 12px; color: #444; cursor: pointer; text-decoration: underline; margin-top: 10px; display: none; text-align: center; }
+    .compat-recheck:hover { color: #888; }
+
     /* ── OS Strip ─────────────────────────────────────────────────────── */
     .os-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; text-align: center; }
     .os-strip p { font-size: 12px; color: #444; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -628,6 +701,70 @@
 </section>
 
 
+<!-- ── Compat checker ──────────────────────────────────────────────────────── -->
+<section class="compat" id="compat">
+  <div class="container">
+    <div class="compat-header">
+      <p class="section-label">Compatibilité</p>
+      <h2 class="section-title">Mon écran est-il compatible ?</h2>
+      <p class="section-sub">Détection automatique depuis votre navigateur — aucune installation requise.</p>
+    </div>
+
+    <div class="compat-box">
+      <!-- Scanning state -->
+      <div class="compat-scanning" id="compat-scanning">
+        <div class="compat-scan-ring"></div>
+        <p class="compat-scan-label">Analyse de votre configuration…</p>
+      </div>
+
+      <!-- Signals list (hidden until scan done) -->
+      <div class="compat-signals" id="compat-signals">
+        <div class="compat-signal-row" id="sig-os">
+          <div class="compat-signal-icon" id="sig-os-icon">💻</div>
+          <div class="compat-signal-text">
+            <div class="compat-signal-label">Système d'exploitation</div>
+            <div class="compat-signal-value" id="sig-os-value">—</div>
+          </div>
+          <span class="compat-signal-badge" id="sig-os-badge">—</span>
+        </div>
+        <div class="compat-signal-row" id="sig-screens">
+          <div class="compat-signal-icon" id="sig-screens-icon">🖥️</div>
+          <div class="compat-signal-text">
+            <div class="compat-signal-label">Écrans détectés</div>
+            <div class="compat-signal-value" id="sig-screens-value">—</div>
+          </div>
+          <span class="compat-signal-badge" id="sig-screens-badge">—</span>
+        </div>
+        <div class="compat-signal-row" id="sig-res">
+          <div class="compat-signal-icon ok">📐</div>
+          <div class="compat-signal-text">
+            <div class="compat-signal-label">Résolution principale</div>
+            <div class="compat-signal-value" id="sig-res-value">—</div>
+          </div>
+          <span class="compat-signal-badge ok" id="sig-res-badge">—</span>
+        </div>
+        <div class="compat-signal-row" id="sig-color">
+          <div class="compat-signal-icon" id="sig-color-icon">🎨</div>
+          <div class="compat-signal-text">
+            <div class="compat-signal-label">Profondeur de couleur</div>
+            <div class="compat-signal-value" id="sig-color-value">—</div>
+          </div>
+          <span class="compat-signal-badge" id="sig-color-badge">—</span>
+        </div>
+      </div>
+
+      <!-- Verdict -->
+      <div class="compat-verdict" id="compat-verdict">
+        <div class="compat-verdict-title" id="verdict-title">—</div>
+        <div class="compat-verdict-sub" id="verdict-sub">—</div>
+      </div>
+      <p class="compat-disclaimer">La compatibilité DDC-CI exacte ne peut être confirmée que par l'application elle-même.</p>
+      <p class="compat-recheck" id="compat-recheck">↩ Relancer l'analyse</p>
+    </div>
+  </div>
+</section>
+
+
 <!-- ── Comparaison ──────────────────────────────────────────────────────────── -->
 <section class="comparison" id="comparison">
   <div class="container">
@@ -925,6 +1062,133 @@
     tick(); setInterval(tick, 10000);
 
     update();
+
+    // ── Compat checker (auto-détection) ──────────────────────────────
+    function runCompatScan() {
+      var scanning = document.getElementById('compat-scanning');
+      var signals  = document.getElementById('compat-signals');
+      var verdict  = document.getElementById('compat-verdict');
+      var recheck  = document.getElementById('compat-recheck');
+
+      // Reset state
+      scanning.style.display = 'block';
+      signals.style.display  = 'none';
+      verdict.style.display  = 'none';
+      verdict.style.opacity  = '0';
+      recheck.style.display  = 'none';
+      document.querySelectorAll('.compat-signal-row').forEach(function(r) {
+        r.classList.remove('visible');
+      });
+
+      setTimeout(function() {
+        // ── 1. OS detection ──────────────────────────────────────────
+        var ua = navigator.userAgent || '';
+        var platform = (navigator.userAgentData && navigator.userAgentData.platform)
+                       || navigator.platform || '';
+        var isWindows = /Windows/i.test(ua) || /Win/i.test(platform);
+        var isWin10or11 = isWindows && /Windows NT 1[01]/i.test(ua);
+        var osLabel, osBadge, osCls;
+        if (isWin10or11) {
+          osLabel  = 'Windows 10 / 11 détecté';
+          osBadge  = 'Compatible';  osCls = 'ok';
+        } else if (isWindows) {
+          osLabel  = 'Windows (version ancienne possible)';
+          osBadge  = 'Partiel'; osCls = 'warn';
+        } else {
+          osLabel  = platform || ua.substring(0,40) || 'Système non identifié';
+          osBadge  = 'Non compatible'; osCls = 'no';
+        }
+        setSignal('sig-os', osCls, osLabel, osBadge);
+
+        // ── 2. Screen count ──────────────────────────────────────────
+        var multiscreen = ('isExtended' in screen) ? screen.isExtended : null;
+        var screenW = screen.width, screenH = screen.height;
+        var screenLabel, screenBadge, screenCls;
+        if (multiscreen === true) {
+          screenLabel  = 'Plusieurs écrans détectés';
+          screenBadge  = 'Multi-moniteur'; screenCls = 'ok';
+        } else if (multiscreen === false) {
+          screenLabel  = '1 écran détecté (écran externe ou laptop)';
+          screenBadge  = 'À vérifier'; screenCls = 'warn';
+        } else {
+          // API not available — infer from resolution being "too small" for desktop
+          var likelyDesktop = screenW >= 1920 || screenH >= 1080;
+          screenLabel  = likelyDesktop ? '1 écran (bureau probable)' : '1 écran (laptop possible)';
+          screenBadge  = likelyDesktop ? 'Probable' : 'À vérifier';
+          screenCls    = likelyDesktop ? 'ok' : 'warn';
+        }
+        setSignal('sig-screens', screenCls, screenLabel, screenBadge);
+
+        // ── 3. Resolution ────────────────────────────────────────────
+        var dpr = window.devicePixelRatio || 1;
+        var physW = Math.round(screenW * dpr), physH = Math.round(screenH * dpr);
+        var resLabel  = physW + ' × ' + physH + 'px';
+        var resBadge  = (physW >= 1920) ? 'Full HD +' : (physW >= 1280 ? 'HD' : 'Basse résolution');
+        var resCls    = (physW >= 1280) ? 'ok' : 'warn';
+        setSignal('sig-res', resCls, resLabel, resBadge);
+
+        // ── 4. Color depth ───────────────────────────────────────────
+        var depth = screen.colorDepth || 0;
+        var colorLabel = depth ? depth + ' bits par pixel' : 'Non détectée';
+        var colorBadge, colorCls;
+        if (depth >= 24) { colorBadge = 'Couleurs vraies'; colorCls = 'ok'; }
+        else if (depth > 0) { colorBadge = 'Limité'; colorCls = 'warn'; }
+        else { colorBadge = '?'; colorCls = 'warn'; }
+        setSignal('sig-color', colorCls, colorLabel, colorBadge);
+
+        // Show signals with staggered animation
+        scanning.style.display = 'none';
+        signals.style.display  = 'block';
+        var rows = document.querySelectorAll('.compat-signal-row');
+        rows.forEach(function(row, i) {
+          setTimeout(function() { row.classList.add('visible'); }, i * 120);
+        });
+
+        // ── Verdict ──────────────────────────────────────────────────
+        var vCls, vTitle, vSub;
+        if (!isWindows) {
+          vCls   = 'no';
+          vTitle = 'Non compatible';
+          vSub   = 'Lumina Control est une application Windows exclusivement. DDC-CI est une API Windows — il n\'existe pas d\'équivalent Linux ou macOS.';
+        } else if (!isWin10or11) {
+          vCls   = 'warn';
+          vTitle = 'Compatibilité incertaine';
+          vSub   = 'Lumina Control requiert Windows 10 ou 11. Votre version de Windows pourrait poser des problèmes.';
+        } else if (multiscreen === true) {
+          vCls   = 'ok';
+          vTitle = 'Configuration multi-écrans détectée — Très probablement compatible';
+          vSub   = 'Windows 10/11 + plusieurs moniteurs = le scénario idéal pour Lumina Control. Si vos écrans supportent DDC-CI (la quasi-totalité des moniteurs de bureau modernes), l\'app les contrôlera immédiatement.';
+        } else {
+          vCls   = 'ok';
+          vTitle = 'Probablement compatible';
+          vSub   = 'Windows 10/11 détecté. La compatibilité DDC-CI dépend de votre modèle d\'écran — les écrans externes modernes (HDMI, DisplayPort) le supportent dans 95 % des cas. Les écrans intégrés laptop ne sont pas supportés.';
+        }
+
+        setTimeout(function() {
+          verdict.className      = 'compat-verdict ' + vCls;
+          verdict.style.display  = 'block';
+          document.getElementById('verdict-title').textContent = vTitle;
+          document.getElementById('verdict-sub').textContent   = vSub;
+          setTimeout(function() {
+            verdict.style.opacity = '1';
+            recheck.style.display = 'block';
+          }, 40);
+        }, rows.length * 120 + 200);
+
+      }, 1400);
+    }
+
+    function setSignal(id, cls, valueText, badgeText) {
+      var icon  = document.getElementById(id + '-icon');
+      var value = document.getElementById(id + '-value');
+      var badge = document.getElementById(id + '-badge');
+      if (icon)  { icon.className  = 'compat-signal-icon ' + cls; }
+      if (value) { value.textContent = valueText; }
+      if (badge) { badge.className = 'compat-signal-badge ' + cls; badge.textContent = badgeText; }
+    }
+
+    document.getElementById('compat-recheck').addEventListener('click', runCompatScan);
+    runCompatScan();
 
     // Toggle interactif / vidéo
     var btnI = document.getElementById('btn-interactive');
