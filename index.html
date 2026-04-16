@@ -1110,8 +1110,10 @@
         setSignal('sig-os', osCls, osLabel, osBadge);
 
         // ── 2. Screen count ──────────────────────────────────────────
-        var multiscreen = ('isExtended' in screen) ? screen.isExtended : null;
-        var screenW = screen.width, screenH = screen.height;
+        var wscr = window.screen;
+        var multiscreen = (wscr && 'isExtended' in wscr) ? wscr.isExtended : null;
+        var screenW = wscr ? (wscr.width  || 0) : 0;
+        var screenH = wscr ? (wscr.height || 0) : 0;
         var screenLabel, screenBadge, screenCls;
         if (multiscreen === true) {
           screenLabel  = 'Plusieurs écrans détectés';
@@ -1159,7 +1161,7 @@
         setSignal('sig-res', resCls, resLabel, resBadge);
 
         // ── 4. Color depth ───────────────────────────────────────────
-        var depth = screen.colorDepth || 0;
+        var depth = (wscr && wscr.colorDepth) || 0;
         var colorLabel = depth ? depth + ' bits par pixel' : 'Non détectée';
         var colorBadge, colorCls;
         if (depth >= 24) { colorBadge = 'Couleurs vraies'; colorCls = 'ok'; }
