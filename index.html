@@ -305,6 +305,15 @@
     .compat-disclaimer { font-size: 11px; color: #3a3a3a; margin-top: 16px; text-align: center; }
     .compat-recheck { font-size: 12px; color: #444; cursor: pointer; text-decoration: underline; margin-top: 10px; display: none; text-align: center; }
     .compat-recheck:hover { color: #888; }
+    .compat-detect-btn {
+      display: inline-block; margin-top: 4px;
+      font-size: 11px; font-weight: 600; color: var(--accent);
+      background: rgba(96,205,255,0.08); border: 1px solid rgba(96,205,255,0.20);
+      border-radius: 6px; padding: 3px 10px; cursor: pointer;
+      transition: background .2s;
+    }
+    .compat-detect-btn:hover { background: rgba(96,205,255,0.14); }
+    .compat-detect-btn:disabled { opacity: .5; cursor: default; }
 
     /* ── OS Strip ─────────────────────────────────────────────────────── */
     .os-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; text-align: center; }
@@ -1107,17 +1116,39 @@
         if (multiscreen === true) {
           screenLabel  = 'Plusieurs écrans détectés';
           screenBadge  = 'Multi-moniteur'; screenCls = 'ok';
-        } else if (multiscreen === false) {
-          screenLabel  = '1 écran détecté (écran externe ou laptop)';
-          screenBadge  = 'À vérifier'; screenCls = 'warn';
         } else {
-          // API not available — infer from resolution being "too small" for desktop
-          var likelyDesktop = screenW >= 1920 || screenH >= 1080;
-          screenLabel  = likelyDesktop ? '1 écran (bureau probable)' : '1 écran (laptop possible)';
-          screenBadge  = likelyDesktop ? 'Probable' : 'À vérifier';
-          screenCls    = likelyDesktop ? 'ok' : 'warn';
+          // isExtended false OR unsupported — can't tell with certainty
+          screenLabel  = 'Non déterminé par le navigateur';
+          screenBadge  = '?'; screenCls = 'warn';
         }
         setSignal('sig-screens', screenCls, screenLabel, screenBadge);
+
+        // Inject "count precisely" button if getScreenDetails API is available
+        if ('getScreenDetails' in window) {
+          var valEl = document.getElementById('sig-screens-value');
+          var old = valEl.querySelector('.compat-detect-btn');
+          if (old) old.remove();
+          var detectBtn = document.createElement('button');
+          detectBtn.className = 'compat-detect-btn';
+          detectBtn.textContent = '🔍 Compter précisément';
+          detectBtn.addEventListener('click', function() {
+            detectBtn.disabled = true;
+            detectBtn.textContent = 'Demande de permission…';
+            window.getScreenDetails().then(function(details) {
+              var count = details.screens.length;
+              var cls   = count > 1 ? 'ok' : 'warn';
+              var lbl   = count + ' écran' + (count > 1 ? 's' : '') + ' détecté' + (count > 1 ? 's' : '');
+              var bdg   = count > 1 ? count + ' écrans' : '1 écran';
+              setSignal('sig-screens', cls, lbl, bdg);
+              // Recalculate verdict with updated multiscreen value
+              updateVerdict(isWindows, isWin10or11, count > 1);
+            }).catch(function() {
+              detectBtn.disabled = false;
+              detectBtn.textContent = '🔍 Compter précisément';
+            });
+          });
+          valEl.appendChild(detectBtn);
+        }
 
         // ── 3. Resolution ────────────────────────────────────────────
         var dpr = window.devicePixelRatio || 1;
@@ -1144,31 +1175,11 @@
           setTimeout(function() { row.classList.add('visible'); }, i * 120);
         });
 
-        // ── Verdict ──────────────────────────────────────────────────
-        var vCls, vTitle, vSub;
-        if (!isWindows) {
-          vCls   = 'no';
-          vTitle = 'Non compatible';
-          vSub   = 'Lumina Control est une application Windows exclusivement. DDC-CI est une API Windows — il n\'existe pas d\'équivalent Linux ou macOS.';
-        } else if (!isWin10or11) {
-          vCls   = 'warn';
-          vTitle = 'Compatibilité incertaine';
-          vSub   = 'Lumina Control requiert Windows 10 ou 11. Votre version de Windows pourrait poser des problèmes.';
-        } else if (multiscreen === true) {
-          vCls   = 'ok';
-          vTitle = 'Configuration multi-écrans détectée — Très probablement compatible';
-          vSub   = 'Windows 10/11 + plusieurs moniteurs = le scénario idéal pour Lumina Control. Si vos écrans supportent DDC-CI (la quasi-totalité des moniteurs de bureau modernes), l\'app les contrôlera immédiatement.';
-        } else {
-          vCls   = 'ok';
-          vTitle = 'Probablement compatible';
-          vSub   = 'Windows 10/11 détecté. La compatibilité DDC-CI dépend de votre modèle d\'écran — les écrans externes modernes (HDMI, DisplayPort) le supportent dans 95 % des cas. Les écrans intégrés laptop ne sont pas supportés.';
-        }
+        // ── Initial verdict (may be updated after getScreenDetails) ──
+        updateVerdict(isWindows, isWin10or11, multiscreen === true);
 
         setTimeout(function() {
-          verdict.className      = 'compat-verdict ' + vCls;
-          verdict.style.display  = 'block';
-          document.getElementById('verdict-title').textContent = vTitle;
-          document.getElementById('verdict-sub').textContent   = vSub;
+          verdict.style.display = 'block';
           setTimeout(function() {
             verdict.style.opacity = '1';
             recheck.style.display = 'block';
@@ -1176,6 +1187,31 @@
         }, rows.length * 120 + 200);
 
       }, 1400);
+    }
+
+    function updateVerdict(isWindows, isWin10or11, hasMultiscreen) {
+      var verdict = document.getElementById('compat-verdict');
+      var vCls, vTitle, vSub;
+      if (!isWindows) {
+        vCls   = 'no';
+        vTitle = 'Non compatible';
+        vSub   = 'Lumina Control est une application Windows exclusivement. DDC-CI est une API Windows — il n\'existe pas d\'équivalent Linux ou macOS.';
+      } else if (!isWin10or11) {
+        vCls   = 'warn';
+        vTitle = 'Compatibilité incertaine';
+        vSub   = 'Lumina Control requiert Windows 10 ou 11. Votre version de Windows pourrait poser des problèmes.';
+      } else if (hasMultiscreen) {
+        vCls   = 'ok';
+        vTitle = 'Configuration multi-écrans — Très probablement compatible';
+        vSub   = 'Windows 10/11 + plusieurs moniteurs = le scénario idéal pour Lumina Control. Si vos écrans supportent DDC-CI (la quasi-totalité des moniteurs de bureau modernes), l\'app les contrôlera immédiatement.';
+      } else {
+        vCls   = 'ok';
+        vTitle = 'Probablement compatible';
+        vSub   = 'Windows 10/11 détecté. La compatibilité DDC-CI dépend de votre modèle d\'écran — les écrans externes modernes (HDMI, DisplayPort) le supportent dans 95 % des cas. Les écrans intégrés laptop ne sont pas supportés.';
+      }
+      verdict.className = 'compat-verdict ' + vCls;
+      document.getElementById('verdict-title').textContent = vTitle;
+      document.getElementById('verdict-sub').textContent   = vSub;
     }
 
     function setSignal(id, cls, valueText, badgeText) {
