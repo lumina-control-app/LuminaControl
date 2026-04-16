@@ -522,6 +522,22 @@
     }
     .btn-buy:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
     .pricing-note { font-size: 11px; color: #444; margin-top: 16px; }
+    .pricing-spots {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,160,40,0.06); border: 1px solid rgba(255,160,40,0.18);
+      border-radius: 8px; padding: 10px 14px; margin-bottom: 20px;
+    }
+    .pricing-spots-bar {
+      flex: 1; height: 5px; border-radius: 3px;
+      background: rgba(255,255,255,0.07); overflow: hidden;
+    }
+    .pricing-spots-fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, #FF9A00, #FFc040);
+      width: 0%; transition: width .8s ease;
+    }
+    .pricing-spots-label { font-size: 12px; color: #FF9A00; font-weight: 700; white-space: nowrap; }
+    .pricing-price-old { font-size: 16px; color: #555; text-decoration: line-through; margin-left: 8px; vertical-align: middle; }
 
     /* ── FAQ ──────────────────────────────────────────────────────────── */
     .faq { padding: 80px 0; background: var(--bg2); }
@@ -977,9 +993,13 @@
     <h2 class="section-title">Simple. Une fois pour toutes.</h2>
     <p class="section-sub" style="margin:0 auto">Pas d'abonnement. Pas de compte en ligne. Vous payez une fois, vous utilisez à vie.</p>
     <div class="pricing-card">
-      <div class="pricing-plan">Licence Pro</div>
-      <div class="pricing-price"><sup>€</sup>4</div>
+      <div class="pricing-plan">Licence Pro · Early Access</div>
+      <div class="pricing-price"><sup>€</sup>4 <span class="pricing-price-old">9,99 €</span></div>
       <div class="pricing-once">Paiement unique — licence à vie</div>
+      <div class="pricing-spots">
+        <div class="pricing-spots-bar"><div class="pricing-spots-fill" id="pricing-fill"></div></div>
+        <span class="pricing-spots-label" id="pricing-spots-label">… places restantes</span>
+      </div>
       <ul class="pricing-features">
         <li>Toutes les fonctionnalités incluses</li>
         <li>Mises à jour gratuites</li>
@@ -1315,12 +1335,19 @@
       function updateSpots(sold) {
         var remaining = Math.max(0, TOTAL - sold);
         var pct = Math.min(100, Math.round((sold / TOTAL) * 100));
-        var fill  = document.getElementById('ea-fill');
-        var label = document.getElementById('ea-spots-label');
-        if (fill)  fill.style.width = pct + '%';
-        if (label) label.textContent = remaining > 0
+        var txt = remaining > 0
           ? remaining + ' place' + (remaining > 1 ? 's' : '') + ' restante' + (remaining > 1 ? 's' : '')
           : 'Offre terminée';
+
+        var eaFill  = document.getElementById('ea-fill');
+        var eaLabel = document.getElementById('ea-spots-label');
+        if (eaFill)  eaFill.style.width  = pct + '%';
+        if (eaLabel) eaLabel.textContent  = txt;
+
+        var pricingFill  = document.getElementById('pricing-fill');
+        var pricingLabel = document.getElementById('pricing-spots-label');
+        if (pricingFill)  pricingFill.style.width  = pct + '%';
+        if (pricingLabel) pricingLabel.textContent  = txt;
       }
 
       // Valeur par défaut affichée immédiatement
