@@ -547,8 +547,93 @@
     .pricing-spots-label { font-size: 12px; color: #FF9A00; font-weight: 700; white-space: nowrap; }
     .pricing-price-old { font-size: 16px; color: #555; text-decoration: line-through; margin-left: 8px; vertical-align: middle; }
 
+    /* ── Avis utilisateurs ───────────────────────────────────────────── */
+    .reviews { padding: 80px 0; background: var(--bg2); }
+    .reviews-header { text-align: center; margin-bottom: 52px; }
+    .reviews-header .section-sub { margin: 0 auto; }
+
+    /* Cards d'avis */
+    .reviews-list {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 20px; margin-bottom: 48px; min-height: 0;
+    }
+    .review-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 24px 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .review-stars { color: #FFB800; font-size: 14px; letter-spacing: 1px; }
+    .review-text {
+      font-size: 14px; color: #ccc; line-height: 1.65;
+      flex: 1; font-style: italic;
+    }
+    .review-text::before { content: '\201C'; }
+    .review-text::after  { content: '\201D'; }
+    .review-meta { display: flex; flex-direction: column; gap: 3px; }
+    .review-name { font-size: 13px; font-weight: 700; color: #fff; }
+    .review-config { font-size: 11px; color: #555; }
+    .reviews-empty {
+      grid-column: 1/-1; text-align: center;
+      font-size: 14px; color: #444; padding: 24px 0;
+    }
+
+    /* Formulaire */
+    .review-form-wrap {
+      max-width: 600px; margin: 0 auto;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 36px;
+    }
+    .review-form-title {
+      font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px;
+    }
+    .review-form-sub { font-size: 13px; color: var(--subtle); margin-bottom: 24px; }
+    .review-stars-input { display: flex; gap: 6px; margin-bottom: 18px; }
+    .review-stars-input input[type="radio"] { display: none; }
+    .review-stars-input label {
+      font-size: 22px; cursor: pointer; color: #333;
+      transition: color .15s; user-select: none;
+    }
+    .review-stars-input label:hover,
+    .review-stars-input label:hover ~ label { color: #333; }
+    .review-stars-input input:checked ~ label { color: #333; }
+    .review-stars-input label:hover,
+    .star-label-active { color: #FFB800 !important; }
+    .review-field {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: inherit; font-size: 14px;
+      padding: 11px 14px; margin-bottom: 12px;
+      transition: border-color .2s; outline: none;
+    }
+    .review-field:focus { border-color: rgba(96,205,255,0.35); }
+    .review-field::placeholder { color: #444; }
+    textarea.review-field { resize: vertical; min-height: 100px; }
+    .review-hp { display: none; }
+    .review-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .review-submit {
+      width: 100%; background: var(--accent); color: #000;
+      font-weight: 700; font-size: 14px; padding: 13px;
+      border-radius: 9px; border: none; cursor: pointer;
+      transition: opacity .2s, transform .15s; margin-top: 4px;
+    }
+    .review-submit:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+    .review-submit:disabled { opacity: .4; cursor: not-allowed; }
+    .review-feedback {
+      margin-top: 14px; font-size: 13px; text-align: center;
+      padding: 10px 14px; border-radius: 8px; display: none;
+    }
+    .review-feedback.ok  { background: rgba(96,205,255,0.08); color: var(--accent); border: 1px solid rgba(96,205,255,0.20); }
+    .review-feedback.err { background: rgba(255,96,96,0.08); color: #FF8080; border: 1px solid rgba(255,96,96,0.20); }
+    .review-moderation { font-size: 11px; color: #444; text-align: center; margin-top: 12px; }
+
+    @media (max-width: 768px) {
+      .reviews-list { grid-template-columns: 1fr; }
+      .review-row { grid-template-columns: 1fr; }
+      .review-form-wrap { padding: 24px 20px; }
+    }
+
     /* ── FAQ ──────────────────────────────────────────────────────────── */
-    .faq { padding: 80px 0; background: var(--bg2); }
+    .faq { padding: 80px 0; background: var(--bg); }
     .faq-header { text-align: center; margin-bottom: 48px; }
     .faq-grid { max-width: 720px; margin: 0 auto; display: grid; gap: 16px; }
     .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; }
@@ -705,6 +790,7 @@
       <a href="#creators">Créateurs & Pros</a>
       <a href="#comparison">Comparatif</a>
       <a href="#pricing">Tarif</a>
+      <a href="#avis">Avis</a>
       <a href="#faq">FAQ</a>
       <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/ae9ee0d1-c6cb-43ba-b545-b71976163c64" class="btn-nav">Acheter</a>
     </div>
@@ -1348,6 +1434,64 @@
 </section>
 
 
+<!-- ── Avis utilisateurs ─────────────────────────────────────────────────────── -->
+<section class="reviews" id="avis">
+  <div class="container">
+    <div class="reviews-header">
+      <p class="section-label">Avis</p>
+      <h2 class="section-title">Ce qu'ils en pensent</h2>
+      <p class="section-sub">Utilisateurs réels. Avis non modifiés, publiés après lecture.</p>
+    </div>
+
+    <!-- Commentaires approuvés — chargés via JS -->
+    <div class="reviews-list" id="reviews-list">
+      <div class="reviews-empty" id="reviews-empty">
+        Soyez le premier à laisser un avis.
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="review-form-wrap">
+      <div class="review-form-title">Partager votre expérience</div>
+      <div class="review-form-sub">Sans compte. Votre avis sera publié après lecture (24–48 h).</div>
+
+      <form id="review-form" novalidate>
+
+        <!-- Étoiles -->
+        <div class="review-stars-input" id="stars-input" role="group" aria-label="Note">
+          <input type="radio" name="rating" id="s5" value="5">
+          <label for="s5" title="5 étoiles">★</label>
+          <input type="radio" name="rating" id="s4" value="4">
+          <label for="s4" title="4 étoiles">★</label>
+          <input type="radio" name="rating" id="s3" value="3">
+          <label for="s3" title="3 étoiles">★</label>
+          <input type="radio" name="rating" id="s2" value="2">
+          <label for="s2" title="2 étoiles">★</label>
+          <input type="radio" name="rating" id="s1" value="1">
+          <label for="s1" title="1 étoile">★</label>
+        </div>
+
+        <div class="review-row">
+          <input type="text"  class="review-field" name="name"   placeholder="Prénom *" required maxlength="60">
+          <input type="text"  class="review-field" name="config" placeholder="Votre config (ex : 2 Dell + laptop)" maxlength="80">
+        </div>
+        <textarea class="review-field" name="comment" placeholder="Votre avis… (30 caractères minimum) *" required minlength="30" maxlength="800"></textarea>
+
+        <!-- Honeypot — ne pas toucher -->
+        <input class="review-hp" type="text" name="website" tabindex="-1" autocomplete="off">
+
+        <button type="submit" class="review-submit" id="review-submit" disabled>
+          Envoyer l'avis
+        </button>
+        <div class="review-feedback" id="review-feedback"></div>
+        <p class="review-moderation">🔍 Chaque avis est lu avant publication — aucune modération automatique ne supprime votre message.</p>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+
 <!-- ── FAQ ──────────────────────────────────────────────────────────────────── -->
 <section class="faq" id="faq">
   <div class="container">
@@ -1668,6 +1812,143 @@
 
     document.getElementById('compat-recheck').addEventListener('click', runCompatScan);
     runCompatScan();
+
+    // ── Avis utilisateurs ─────────────────────────────────────────────
+    (function() {
+
+      // ── Config — remplace ces deux URLs par tes endpoints Pipedream ──
+      var REVIEWS_GET_URL  = 'https://script.google.com/macros/s/AKfycbxYbnARvXS0R8Lq0RYKuwlYXS2ANBOHe3WjY4HLJB4iEnkYtlncP1g6sCG74Qn8eb6Q/exec';
+      var REVIEWS_POST_URL = 'https://script.google.com/macros/s/AKfycbxYbnARvXS0R8Lq0RYKuwlYXS2ANBOHe3WjY4HLJB4iEnkYtlncP1g6sCG74Qn8eb6Q/exec';
+      // ────────────────────────────────────────────────────────────────
+
+      var _pageLoadTime = Date.now();
+      var GUARD_MS      = 8000;   // 8 s avant d'activer le bouton
+      var MIN_CHARS     = 30;
+
+      // Activer le bouton après la garde temporelle
+      var submitBtn = document.getElementById('review-submit');
+      var _guardTimer = setTimeout(function() {
+        submitBtn.disabled = false;
+      }, GUARD_MS);
+
+      // ── Étoiles interactives (ordre RTL via CSS, on corrige en JS) ──
+      var starsWrap = document.getElementById('stars-input');
+      var starLabels = starsWrap.querySelectorAll('label');
+      var selectedRating = 0;
+
+      // L'ordre HTML est 5→1 (radio RTL trick CSS).
+      // En JS on lit la valeur du radio coché.
+      starsWrap.addEventListener('mouseover', function(e) {
+        if (e.target.tagName !== 'LABEL') return;
+        var val = parseInt(e.target.previousElementSibling && e.target.previousElementSibling.value || 0);
+        highlightStars(val);
+      });
+      starsWrap.addEventListener('mouseout', function() {
+        highlightStars(selectedRating);
+      });
+      starsWrap.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+          selectedRating = parseInt(e.target.value);
+          highlightStars(selectedRating);
+        }
+      });
+
+      function highlightStars(n) {
+        starLabels.forEach(function(lbl) {
+          var v = parseInt(lbl.previousElementSibling && lbl.previousElementSibling.value || 0);
+          lbl.style.color = v <= n ? '#FFB800' : '#333';
+        });
+      }
+
+      // ── Chargement des avis approuvés ───────────────────────────────
+      function renderReviews(reviews) {
+        var list  = document.getElementById('reviews-list');
+        var empty = document.getElementById('reviews-empty');
+        if (!reviews || !reviews.length) return;
+        empty.style.display = 'none';
+        reviews.forEach(function(r) {
+          var stars = '';
+          if (r.rating) {
+            for (var i = 0; i < 5; i++) stars += i < r.rating ? '★' : '☆';
+          }
+          var card = document.createElement('div');
+          card.className = 'review-card';
+          card.innerHTML =
+            (stars ? '<div class="review-stars">' + stars + '</div>' : '') +
+            '<div class="review-text">' + escHtml(r.comment) + '</div>' +
+            '<div class="review-meta">' +
+              '<span class="review-name">' + escHtml(r.name) + '</span>' +
+              (r.config ? '<span class="review-config">' + escHtml(r.config) + '</span>' : '') +
+            '</div>';
+          list.appendChild(card);
+        });
+      }
+
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      fetch(REVIEWS_GET_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(d) { renderReviews(d.reviews || []); })
+        .catch(function() { /* endpoint non configuré, affichage vide */ });
+
+      // ── Soumission ──────────────────────────────────────────────────
+      document.getElementById('review-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = e.target;
+
+        // Honeypot
+        if (form.website.value) return;
+
+        // Garde temporelle
+        if (Date.now() - _pageLoadTime < GUARD_MS) return;
+
+        var name    = form.name.value.trim();
+        var comment = form.comment.value.trim();
+        var config  = form.config ? form.config.value.trim() : '';
+        var rating  = selectedRating || null;
+        var fb      = document.getElementById('review-feedback');
+
+        if (!name || comment.length < MIN_CHARS) {
+          showFeedback('Prénom et commentaire (30 car. min) requis.', 'err');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi…';
+
+        // mode no-cors requis pour Google Apps Script (pas de CORS headers sur doPost)
+        fetch(REVIEWS_POST_URL, {
+          method:  'POST',
+          mode:    'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, comment: comment, config: config, rating: rating })
+        })
+        .then(function() {
+          showFeedback('Merci ! Votre avis sera publié après lecture (24–48 h).', 'ok');
+          form.reset();
+          selectedRating = 0;
+          highlightStars(0);
+          submitBtn.textContent = 'Avis envoyé ✓';
+        })
+        .catch(function() {
+          showFeedback('Erreur réseau — réessayez dans un instant.', 'err');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Envoyer l\'avis';
+        });
+      });
+
+      function showFeedback(msg, type) {
+        var fb = document.getElementById('review-feedback');
+        fb.textContent  = msg;
+        fb.className    = 'review-feedback ' + type;
+        fb.style.display = 'block';
+      }
+
+    })();
 
     // ── Early-access banner ───────────────────────────────────────────
     (function() {
