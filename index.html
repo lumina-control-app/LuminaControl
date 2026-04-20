@@ -3,12 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Lumina Control — Automatisation complète de vos moniteurs sous Windows. Détection gaming, mode circadien, profils par application, support laptop WMI. Sans driver tiers, sans abonnement." />
+  <meta name="description" content="Lumina Control — Contrôle luminosité et luminance moniteur Windows via DDC-CI. Automatisation gaming, mode circadien, profils par application, support laptop. Sans driver tiers, sans abonnement." />
+  <meta name="keywords" content="contrôle luminosité moniteur Windows, DDC-CI, réglage écran automatique, colorimétrie moniteur, calibrage couleurs écran, monitor brightness controller, monitor color calibration, Twinkle Tray alternative, mode circadien écran, profils par application moniteur" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://lumina-control-app.github.io/LuminaControl/" />
+  <meta property="og:title"       content="Lumina Control — Monitor brightness & automation for Windows" />
+  <meta property="og:description" content="DDC-CI monitor controller for Windows 10/11. Auto-dimming, gaming mode, circadian rhythm, per-app profiles. No driver required." />
+  <meta property="og:image"       content="https://lumina-control-app.github.io/LuminaControl/favicon.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary" />
+  <meta name="twitter:title"       content="Lumina Control — Monitor brightness & automation for Windows" />
+  <meta name="twitter:description" content="DDC-CI monitor controller for Windows 10/11. Auto-dimming, gaming mode, circadian rhythm, per-app profiles." />
+  <meta name="twitter:image"       content="https://lumina-control-app.github.io/LuminaControl/favicon.png" />
+
+  <link rel="canonical" href="https://lumina-control-app.github.io/LuminaControl/" />
   <link rel="icon" type="image/png" href="favicon.png" />
-  <title>Lumina Control — Vos moniteurs, enfin intelligents</title>
+  <title>Lumina Control — Contrôle luminosité moniteur Windows (DDC-CI)</title>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     :root {
       --accent:   #60CDFF;
@@ -807,6 +824,7 @@
         <span class="badge">Windows 10 / 11 · Tous moniteurs</span>
       </div>
       <h1>Vos moniteurs,<br><em>enfin intelligents.</em></h1>
+      <p class="sr-only">Lumina Control — logiciel de contrôle luminosité moniteur Windows DDC-CI, colorimétrie et calibrage couleurs écran, réglage automatique, alternative Twinkle Tray</p>
       <p class="hero-sub">
         Lumina Control détecte ce que vous faites — jeu en plein écran,
         application en focus, heure de la journée — et ajuste chaque écran
