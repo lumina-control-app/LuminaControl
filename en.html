@@ -1,38 +1,29 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Lumina Control — Contrôle luminosité et luminance moniteur Windows via DDC-CI. Automatisation gaming, mode circadien, profils par application, support laptop. Sans driver tiers, sans abonnement." />
-  <meta name="keywords" content="contrôle luminosité moniteur Windows, DDC-CI, réglage écran automatique, colorimétrie moniteur, calibrage couleurs écran, monitor brightness controller, monitor color calibration, Twinkle Tray alternative, mode circadien écran, profils par application moniteur" />
+  <meta name="description" content="Lumina Control — Monitor brightness &amp; color control for Windows via DDC-CI. Auto gaming mode, circadian rhythm, per-app profiles, laptop support. No third-party driver, no subscription." />
+  <meta name="keywords" content="monitor brightness control Windows, DDC-CI, automatic screen adjustment, monitor color calibration, colorimetry monitor, Twinkle Tray alternative, circadian mode screen, per-app monitor profiles, monitor controller Windows 10 11" />
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://lumina-control-app.github.io/LuminaControl/" />
-  <meta property="og:title"       content="Lumina Control — Monitor brightness & automation for Windows" />
+  <meta property="og:url"         content="https://lumina-control-app.github.io/LuminaControl/en.html" />
+  <meta property="og:title"       content="Lumina Control — Monitor brightness &amp; automation for Windows" />
   <meta property="og:description" content="DDC-CI monitor controller for Windows 10/11. Auto-dimming, gaming mode, circadian rhythm, per-app profiles. No driver required." />
   <meta property="og:image"       content="https://lumina-control-app.github.io/LuminaControl/favicon.png" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary" />
-  <meta name="twitter:title"       content="Lumina Control — Monitor brightness & automation for Windows" />
+  <meta name="twitter:title"       content="Lumina Control — Monitor brightness &amp; automation for Windows" />
   <meta name="twitter:description" content="DDC-CI monitor controller for Windows 10/11. Auto-dimming, gaming mode, circadian rhythm, per-app profiles." />
   <meta name="twitter:image"       content="https://lumina-control-app.github.io/LuminaControl/favicon.png" />
 
-  <link rel="canonical" href="https://lumina-control-app.github.io/LuminaControl/" />
+  <link rel="canonical" href="https://lumina-control-app.github.io/LuminaControl/en.html" />
   <link rel="alternate" hreflang="fr" href="https://lumina-control-app.github.io/LuminaControl/" />
   <link rel="alternate" hreflang="en" href="https://lumina-control-app.github.io/LuminaControl/en.html" />
   <link rel="icon" type="image/png" href="favicon.png" />
-  <title>Lumina Control — Contrôle luminosité moniteur Windows (DDC-CI)</title>
-
-  <script>
-    (function() {
-      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-      if (!lang.startsWith('fr') && sessionStorage.getItem('lc-lang') !== 'fr') {
-        window.location.replace('en.html');
-      }
-    })();
-  </script>
+  <title>Lumina Control — Monitor Brightness &amp; Color Control for Windows (DDC-CI)</title>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -65,7 +56,6 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ── Utilitaires ──────────────────────────────────────────────────── */
     .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
     .badge {
       display: inline-block;
@@ -92,184 +82,76 @@
       max-width: 560px; line-height: 1.7;
     }
 
-    /* ── Early-access banner ─────────────────────────────────────────── */
     .ea-banner {
       background: linear-gradient(90deg, #1a0a00, #1f1000, #1a0a00);
       border-bottom: 1px solid rgba(255,160,40,0.25);
-      padding: 10px 0;
-      text-align: center;
-      font-size: 13px;
-      position: relative;
+      padding: 10px 0; text-align: center; font-size: 13px; position: relative;
     }
-    .ea-banner-inner {
-      display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: 10px 18px;
-    }
-    .ea-tag {
-      background: #FF9A00; color: #000;
-      font-size: 10px; font-weight: 800;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 2px 9px; border-radius: 4px;
-      flex-shrink: 0;
-    }
+    .ea-banner-inner { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 18px; }
+    .ea-tag { background: #FF9A00; color: #000; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 9px; border-radius: 4px; flex-shrink: 0; }
     .ea-text { color: #E0E0E0; }
     .ea-text strong { color: #fff; }
-    .ea-price-old {
-      color: #666; text-decoration: line-through;
-      font-size: 13px;
-    }
-    .ea-price-new {
-      color: #FF9A00; font-weight: 800; font-size: 15px;
-    }
-    .ea-spots {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12px; color: #888;
-    }
-    .ea-spots-bar {
-      width: 80px; height: 4px; border-radius: 2px;
-      background: rgba(255,255,255,0.08);
-      overflow: hidden;
-    }
-    .ea-spots-fill {
-      height: 100%; border-radius: 2px;
-      background: linear-gradient(90deg, #FF9A00, #FFc040);
-      width: 38%; /* à ajuster manuellement */
-      transition: width .6s ease;
-    }
+    .ea-price-old { color: #666; text-decoration: line-through; font-size: 13px; }
+    .ea-price-new { color: #FF9A00; font-weight: 800; font-size: 15px; }
+    .ea-spots { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #888; }
+    .ea-spots-bar { width: 80px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .ea-spots-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #FF9A00, #FFc040); width: 38%; transition: width .6s ease; }
     .ea-spots-label { color: #aaa; white-space: nowrap; }
-    .ea-cta {
-      background: #FF9A00; color: #000;
-      font-size: 12px; font-weight: 800;
-      padding: 5px 16px; border-radius: 6px;
-      text-decoration: none; white-space: nowrap;
-      transition: opacity .2s;
-      flex-shrink: 0;
-    }
+    .ea-cta { background: #FF9A00; color: #000; font-size: 12px; font-weight: 800; padding: 5px 16px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: opacity .2s; flex-shrink: 0; }
     .ea-cta:hover { opacity: .85; text-decoration: none; }
-    .ea-close {
-      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      font-size: 16px; color: #444; cursor: pointer;
-      line-height: 1; background: none; border: none; padding: 4px;
-    }
+    .ea-close { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #444; cursor: pointer; line-height: 1; background: none; border: none; padding: 4px; }
     .ea-close:hover { color: #888; }
 
-    /* ── Nav ──────────────────────────────────────────────────────────── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(13,13,13,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 0;
-    }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(13,13,13,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
     .nav-logo { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
     .nav-logo span { color: var(--accent); }
     .nav-links { display: flex; align-items: center; gap: 28px; font-size: 13px; }
     .nav-links a { color: var(--subtle); transition: color .2s; }
     .nav-links a:hover { color: #fff; text-decoration: none; }
-    .btn-nav {
-      background: var(--accent); color: #000;
-      font-size: 13px; font-weight: 700;
-      padding: 8px 20px; border-radius: 8px;
-      transition: opacity .2s;
-    }
+    .btn-nav { background: var(--accent); color: #000; font-size: 13px; font-weight: 700; padding: 8px 20px; border-radius: 8px; transition: opacity .2s; }
     .btn-nav:hover { opacity: .85; text-decoration: none; }
 
-    /* ── Hero ─────────────────────────────────────────────────────────── */
     .hero { padding: 96px 0 80px; }
     .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .hero-eyebrow { margin-bottom: 20px; }
-    .hero h1 {
-      font-size: clamp(36px, 5vw, 56px); font-weight: 800; color: #fff;
-      line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px;
-    }
+    .hero h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; }
     .hero h1 em { color: var(--accent); font-style: normal; }
     .hero-sub { font-size: 17px; color: var(--subtle); line-height: 1.7; margin-bottom: 36px; max-width: 480px; }
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
-    .btn-primary {
-      background: var(--accent); color: #000; font-weight: 700; font-size: 15px;
-      padding: 13px 28px; border-radius: 10px;
-      transition: opacity .2s, transform .15s; display: inline-block;
-    }
+    .btn-primary { background: var(--accent); color: #000; font-weight: 700; font-size: 15px; padding: 13px 28px; border-radius: 10px; transition: opacity .2s, transform .15s; display: inline-block; }
     .btn-primary:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
-    .btn-secondary {
-      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
-      color: #ccc; font-size: 15px; padding: 13px 28px; border-radius: 10px;
-      transition: background .2s; display: inline-block;
-    }
+    .btn-secondary { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: #ccc; font-size: 15px; padding: 13px 28px; border-radius: 10px; transition: background .2s; display: inline-block; }
     .btn-secondary:hover { background: rgba(255,255,255,0.10); text-decoration: none; }
     .hero-note { font-size: 12px; color: #666; }
     .hero-note span { margin: 0 8px; }
 
-    /* ── View toggle ──────────────────────────────────────────────────── */
     .hero-visual { display: flex; justify-content: center; align-items: flex-start; }
     .hero-visual-wrap { width: 100%; max-width: 340px; }
-    .view-toggle {
-      display: flex; gap: 4px; margin-bottom: 12px;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      border-radius: 10px; padding: 4px;
-    }
-    .view-btn {
-      flex: 1; font-size: 11px; font-weight: 700; padding: 7px 10px;
-      border-radius: 7px; border: none; cursor: pointer;
-      background: transparent; color: #555; transition: all .2s;
-    }
+    .view-toggle { display: flex; gap: 4px; margin-bottom: 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
+    .view-btn { flex: 1; font-size: 11px; font-weight: 700; padding: 7px 10px; border-radius: 7px; border: none; cursor: pointer; background: transparent; color: #555; transition: all .2s; }
     .view-btn:hover { color: #aaa; }
     .view-btn.active { background: var(--card); color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
-    .video-frame {
-      border-radius: 12px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08);
-    }
-    .video-frame-bar {
-      background: #141414; border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 10px 14px; display: flex; align-items: center; gap: 10px;
-    }
+    .video-frame { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.10); box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08); }
+    .video-frame-bar { background: #141414; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
     .vf-dots { display: flex; gap: 6px; }
     .vf-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .vf-dot.r { background: #FF5F57; } .vf-dot.y { background: #FEBC2E; } .vf-dot.g { background: #28C840; }
     .vf-title { font-size: 12px; color: #555; }
     .video-frame video { display: block; width: 100%; height: auto; }
 
-    /* ── Interactive mockup ───────────────────────────────────────────── */
-    .int-mockup {
-      background: #1C1C1C; border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px; overflow: hidden; width: 100%; max-width: 320px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08);
-    }
-    .int-bar {
-      background: #141414; border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 11px 16px; display: flex; align-items: center; gap: 10px;
-    }
+    .int-mockup { background: #1C1C1C; border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; overflow: hidden; width: 100%; max-width: 320px; box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08); }
+    .int-bar { background: #141414; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 11px 16px; display: flex; align-items: center; gap: 10px; }
     .int-dots { display: flex; gap: 6px; }
     .int-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-    .int-dot.r { background: #FF5F57; }
-    .int-dot.y { background: #FEBC2E; }
-    .int-dot.g { background: #28C840; }
+    .int-dot.r { background: #FF5F57; } .int-dot.y { background: #FEBC2E; } .int-dot.g { background: #28C840; }
     .int-bar-title { font-size: 12px; color: #555; }
-    /* Écran simulé */
-    .int-screen {
-      height: 120px; overflow: hidden; position: relative;
-      transition: filter 0.2s ease;
-    }
-    .int-wallpaper {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #0a2a4a 0%, #1a5070 50%, #0d3550 100%);
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
+    .int-screen { height: 120px; overflow: hidden; position: relative; transition: filter 0.2s ease; }
+    .int-wallpaper { width: 100%; height: 100%; background: linear-gradient(135deg, #0a2a4a 0%, #1a5070 50%, #0d3550 100%); display: flex; flex-direction: column; justify-content: space-between; }
     .int-wp-icons { display: flex; gap: 12px; padding: 12px 14px; }
-    .int-wp-icon {
-      width: 32px; height: 32px; border-radius: 7px;
-      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.15);
-      display: flex; align-items: center; justify-content: center; font-size: 14px;
-    }
-    .int-taskbar {
-      background: rgba(0,0,0,0.5); padding: 5px 12px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid rgba(255,255,255,0.07);
-    }
+    .int-wp-icon { width: 32px; height: 32px; border-radius: 7px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .int-taskbar { background: rgba(0,0,0,0.5); padding: 5px 12px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.07); }
     .int-taskbar-clock { font-size: 9px; color: rgba(255,255,255,0.55); }
-    /* Card contrôles */
     .int-card { padding: 14px 16px 8px; }
     .int-card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
     .int-mon-name { font-size: 12px; font-weight: 700; color: #ddd; }
@@ -277,116 +159,55 @@
     .int-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
     .int-lbl { font-size: 10px; color: #555; width: 24px; flex-shrink: 0; }
     .int-val { font-size: 10px; color: #888; width: 30px; text-align: right; flex-shrink: 0; }
-    .int-slider {
-      flex: 1; -webkit-appearance: none; appearance: none;
-      height: 4px; border-radius: 2px; outline: none; cursor: pointer;
-    }
-    .int-slider::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%;
-      background: #fff; box-shadow: 0 0 0 2px rgba(96,205,255,0.4); cursor: grab;
-    }
+    .int-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px; outline: none; cursor: pointer; }
+    .int-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px rgba(96,205,255,0.4); cursor: grab; }
     .int-slider:active::-webkit-slider-thumb { cursor: grabbing; }
-    .int-status {
-      display: flex; align-items: center; gap: 7px;
-      background: rgba(96,205,255,0.07); border-top: 1px solid rgba(96,205,255,0.12);
-      padding: 8px 16px; font-size: 10px; color: #60CDFF; font-weight: 600;
-    }
+    .int-status { display: flex; align-items: center; gap: 7px; background: rgba(96,205,255,0.07); border-top: 1px solid rgba(96,205,255,0.12); padding: 8px 16px; font-size: 10px; color: #60CDFF; font-weight: 600; }
     .int-hint { font-size: 10px; color: #3a3a3a; text-align: center; padding: 5px 16px 12px; }
-    /* Modes */
     .int-modes { display: flex; gap: 6px; padding: 10px 16px 0; }
-    .int-mode {
-      flex: 1; font-size: 10px; font-weight: 700; text-align: center;
-      padding: 5px 4px; border-radius: 6px; cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.08); color: #555;
-      background: transparent; transition: all .2s; user-select: none;
-    }
+    .int-mode { flex: 1; font-size: 10px; font-weight: 700; text-align: center; padding: 5px 4px; border-radius: 6px; cursor: pointer; border: 1px solid rgba(255,255,255,0.08); color: #555; background: transparent; transition: all .2s; user-select: none; }
     .int-mode:hover { color: #aaa; border-color: rgba(255,255,255,0.15); }
     .int-mode.active { background: rgba(96,205,255,0.12); border-color: rgba(96,205,255,0.35); color: #60CDFF; }
     .int-mode.active.gaming { background: rgba(255,60,60,0.12); border-color: rgba(255,80,80,0.35); color: #FF6060; }
-    /* Gaming state */
     .int-mockup.gaming { border-color: rgba(255,60,60,0.35); box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,60,60,0.12); }
     .int-mockup.gaming .int-status { background: rgba(255,60,60,0.08); border-color: rgba(255,60,60,0.20); color: #FF6060; }
     .int-mockup.gaming .dot { background: #FF6060; }
-    /* Focus mode — 2e moniteur */
     .int-card2 { padding: 0 16px 10px; display: none; }
     .int-card2.visible { display: block; }
-    .int-card2-inner {
-      background: #171717; border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 8px; padding: 10px 12px; opacity: 0.5;
-    }
+    .int-card2-inner { background: #171717; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px 12px; opacity: 0.5; }
     .int-card2-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
-    .int-dim-badge {
-      font-size: 9px; color: #555; background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07); border-radius: 4px; padding: 2px 7px;
-    }
+    .int-dim-badge { font-size: 9px; color: #555; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 4px; padding: 2px 7px; }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-    /* ── Compat checker (auto-détection) ─────────────────────────────── */
     .compat { padding: 80px 0; background: var(--bg2); }
     .compat-header { text-align: center; margin-bottom: 40px; }
     .compat-header .section-sub { margin: 0 auto; }
-    .compat-box {
-      max-width: 580px; margin: 0 auto;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 32px 36px;
-    }
-    /* Scan animation */
-    .compat-scanning {
-      text-align: center; padding: 12px 0 4px;
-    }
-    .compat-scan-ring {
-      width: 52px; height: 52px; margin: 0 auto 16px;
-      border: 3px solid rgba(96,205,255,0.12);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: cspin .7s linear infinite;
-    }
+    .compat-box { max-width: 580px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 36px; }
+    .compat-scanning { text-align: center; padding: 12px 0 4px; }
+    .compat-scan-ring { width: 52px; height: 52px; margin: 0 auto 16px; border: 3px solid rgba(96,205,255,0.12); border-top-color: var(--accent); border-radius: 50%; animation: cspin .7s linear infinite; }
     @keyframes cspin { to { transform: rotate(360deg); } }
     .compat-scan-label { font-size: 14px; color: var(--subtle); }
-    /* Signals list */
     .compat-signals { display: none; }
-    .compat-signal-row {
-      display: flex; align-items: center; gap: 14px;
-      padding: 11px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      opacity: 0; transform: translateY(6px);
-      transition: opacity .3s, transform .3s;
-    }
+    .compat-signal-row { display: flex; align-items: center; gap: 14px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.04); opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s; }
     .compat-signal-row:last-child { border-bottom: none; }
     .compat-signal-row.visible { opacity: 1; transform: none; }
-    .compat-signal-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; flex-shrink: 0;
-      background: rgba(255,255,255,0.04);
-    }
+    .compat-signal-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; background: rgba(255,255,255,0.04); }
     .compat-signal-icon.ok { background: rgba(96,205,255,0.10); color: var(--accent); }
     .compat-signal-icon.warn { background: rgba(255,160,64,0.10); color: #FFA040; }
     .compat-signal-icon.no { background: rgba(255,96,96,0.10); color: #FF6060; }
     .compat-signal-text { flex: 1; }
     .compat-signal-label { font-size: 13px; font-weight: 600; color: #ccc; }
     .compat-signal-value { font-size: 12px; color: var(--subtle); margin-top: 1px; }
-    .compat-signal-badge {
-      font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
-      flex-shrink: 0;
-    }
+    .compat-signal-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; }
     .compat-signal-badge.ok { background: rgba(96,205,255,0.10); border: 1px solid rgba(96,205,255,0.25); color: var(--accent); }
     .compat-signal-badge.warn { background: rgba(255,160,64,0.10); border: 1px solid rgba(255,160,64,0.25); color: #FFA040; }
     .compat-signal-badge.no { background: rgba(255,96,96,0.10); border: 1px solid rgba(255,96,96,0.25); color: #FF6060; }
-    /* Verdict */
-    .compat-verdict {
-      margin-top: 24px; padding: 18px 20px; border-radius: 12px;
-      border: 1px solid rgba(96,205,255,0.20);
-      background: rgba(96,205,255,0.04);
-      display: none; opacity: 0; transition: opacity .4s;
-    }
+    .compat-verdict { margin-top: 24px; padding: 18px 20px; border-radius: 12px; border: 1px solid rgba(96,205,255,0.20); background: rgba(96,205,255,0.04); display: none; opacity: 0; transition: opacity .4s; }
     .compat-verdict.ok  { border-color: rgba(96,205,255,0.25); background: rgba(96,205,255,0.05); }
     .compat-verdict.warn { border-color: rgba(255,160,64,0.25); background: rgba(255,160,64,0.05); }
     .compat-verdict.no  { border-color: rgba(255,96,96,0.25); background: rgba(255,96,96,0.05); }
-    .compat-verdict-title {
-      font-size: 15px; font-weight: 700; margin-bottom: 6px;
-    }
+    .compat-verdict-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
     .compat-verdict.ok  .compat-verdict-title { color: var(--accent); }
     .compat-verdict.warn .compat-verdict-title { color: #FFA040; }
     .compat-verdict.no  .compat-verdict-title { color: #FF6060; }
@@ -394,67 +215,37 @@
     .compat-disclaimer { font-size: 11px; color: #3a3a3a; margin-top: 16px; text-align: center; }
     .compat-recheck { font-size: 12px; color: #444; cursor: pointer; text-decoration: underline; margin-top: 10px; display: none; text-align: center; }
     .compat-recheck:hover { color: #888; }
-    .compat-detect-btn {
-      display: inline-block; margin-top: 4px;
-      font-size: 11px; font-weight: 600; color: var(--accent);
-      background: rgba(96,205,255,0.08); border: 1px solid rgba(96,205,255,0.20);
-      border-radius: 6px; padding: 3px 10px; cursor: pointer;
-      transition: background .2s;
-    }
+    .compat-detect-btn { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 600; color: var(--accent); background: rgba(96,205,255,0.08); border: 1px solid rgba(96,205,255,0.20); border-radius: 6px; padding: 3px 10px; cursor: pointer; transition: background .2s; }
     .compat-detect-btn:hover { background: rgba(96,205,255,0.14); }
     .compat-detect-btn:disabled { opacity: .5; cursor: default; }
 
-    /* ── OS Strip / Trust strip ──────────────────────────────────────── */
     .os-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 16px 0; }
-    .os-strip-inner {
-      display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: 4px 24px;
-    }
+    .os-strip-inner { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px 24px; }
     .os-item { font-size: 12px; color: #606060; }
     .os-item strong { color: #888; font-weight: 600; }
     .os-sep { color: #2a2a2a; font-size: 16px; line-height: 1; }
 
-    /* ── Demo vidéo ───────────────────────────────────────────────────── */
     .demo { padding: 80px 0; text-align: center; }
     .demo-header { margin-bottom: 40px; }
     .demo-header .section-sub { margin: 0 auto; }
-    .demo-video-wrap {
-      position: relative; display: inline-block;
-      border-radius: 16px; overflow: hidden;
-      border: 1px solid rgba(96,205,255,0.15);
-      box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(96,205,255,0.06), 0 0 60px rgba(96,205,255,0.04);
-      max-width: 860px; width: 100%;
-    }
-    .demo-video-wrap video {
-      display: block; width: 100%; height: auto;
-      border-radius: 16px;
-    }
+    .demo-video-wrap { position: relative; display: inline-block; border-radius: 16px; overflow: hidden; border: 1px solid rgba(96,205,255,0.15); box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(96,205,255,0.06), 0 0 60px rgba(96,205,255,0.04); max-width: 860px; width: 100%; }
+    .demo-video-wrap video { display: block; width: 100%; height: auto; border-radius: 16px; }
     .demo-caption { font-size: 12px; color: #444; margin-top: 16px; }
 
-    /* ── Features ─────────────────────────────────────────────────────── */
     .features { padding: 96px 0; }
     .features-header { text-align: center; margin-bottom: 60px; }
     .features-header .section-sub { margin: 0 auto; }
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .feature-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px;
-      transition: border-color .2s, transform .2s;
-    }
+    .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: border-color .2s, transform .2s; }
     .feature-card:hover { border-color: rgba(96,205,255,0.25); transform: translateY(-2px); }
     .feature-icon { font-size: 28px; margin-bottom: 16px; display: block; }
     .feature-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
     .feature-desc { font-size: 13px; color: var(--subtle); line-height: 1.6; }
 
-    /* ── Comparaison ──────────────────────────────────────────────────── */
     .comparison { padding: 80px 0; background: var(--bg2); }
     .comparison-header { text-align: center; margin-bottom: 48px; }
     .comparison-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .comparison-table th {
-      padding: 14px 20px; text-align: left; font-size: 12px; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase; color: var(--subtle);
-      border-bottom: 1px solid var(--border);
-    }
+    .comparison-table th { padding: 14px 20px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--subtle); border-bottom: 1px solid var(--border); }
     .comparison-table th.col-lumina { color: var(--accent); }
     .comparison-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); color: #bbb; }
     .comparison-table tr:last-child td { border-bottom: none; }
@@ -463,46 +254,18 @@
     .cross { color: #444; }
     .col-lumina { background: rgba(96,205,255,0.04); }
 
-    /* ── SmartScreen ──────────────────────────────────────────────────── */
     .smartscreen { padding: 80px 0; }
     .smartscreen-header { text-align: center; margin-bottom: 52px; }
     .smartscreen-header .section-sub { margin: 0 auto; }
-    .ss-why {
-      max-width: 680px; margin: 0 auto 52px;
-      background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.18);
-      border-radius: var(--radius); padding: 20px 28px;
-      font-size: 14px; color: #aaa; line-height: 1.7;
-      display: flex; gap: 16px; align-items: flex-start;
-    }
+    .ss-why { max-width: 680px; margin: 0 auto 52px; background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.18); border-radius: var(--radius); padding: 20px 28px; font-size: 14px; color: #aaa; line-height: 1.7; display: flex; gap: 16px; align-items: flex-start; }
     .ss-why-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
     .ss-why strong { color: #ddd; }
-    .ss-steps {
-      display: flex; align-items: flex-start; justify-content: center;
-      gap: 0; max-width: 900px; margin: 0 auto;
-    }
+    .ss-steps { display: flex; align-items: flex-start; justify-content: center; gap: 0; max-width: 900px; margin: 0 auto; }
     .ss-step { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px; }
-    .ss-step-num {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: rgba(96,205,255,0.15); border: 1px solid rgba(96,205,255,0.35);
-      color: var(--accent); font-size: 12px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; flex-shrink: 0;
-    }
-    .ss-arrow {
-      flex-shrink: 0; color: #333; font-size: 22px;
-      align-self: center; margin-bottom: 80px; padding: 0 4px;
-    }
-    /* Fausse fenêtre Windows SmartScreen */
-    .ss-dialog {
-      background: #F0F0F0; border-radius: 8px; overflow: hidden;
-      width: 100%; max-width: 260px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      margin-bottom: 16px; text-align: left;
-    }
-    .ss-dialog-bar {
-      background: #1464C8; padding: 8px 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
+    .ss-step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(96,205,255,0.15); border: 1px solid rgba(96,205,255,0.35); color: var(--accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; flex-shrink: 0; }
+    .ss-arrow { flex-shrink: 0; color: #333; font-size: 22px; align-self: center; margin-bottom: 80px; padding: 0 4px; }
+    .ss-dialog { background: #F0F0F0; border-radius: 8px; overflow: hidden; width: 100%; max-width: 260px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); margin-bottom: 16px; text-align: left; }
+    .ss-dialog-bar { background: #1464C8; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
     .ss-dialog-bar span { color: #fff; font-size: 11px; font-weight: 600; flex: 1; }
     .ss-dialog-x { color: rgba(255,255,255,0.7); font-size: 13px; cursor: default; }
     .ss-dialog-body { padding: 16px 14px; }
@@ -512,144 +275,68 @@
     .ss-dialog-app { font-size: 10px; color: #222; margin-bottom: 12px; }
     .ss-dialog-app strong { display: block; font-weight: 700; }
     .ss-btn-row { display: flex; justify-content: flex-end; gap: 6px; margin-top: 8px; }
-    .ss-btn {
-      font-size: 10px; padding: 4px 10px; border-radius: 3px;
-      border: 1px solid #bbb; background: #E8E8E8; color: #222; cursor: default;
-    }
+    .ss-btn { font-size: 10px; padding: 4px 10px; border-radius: 3px; border: 1px solid #bbb; background: #E8E8E8; color: #222; cursor: default; }
     .ss-btn.primary { background: #1464C8; color: #fff; border-color: #1464C8; }
     .ss-link { font-size: 10px; color: #1464C8; text-decoration: underline; cursor: default; }
-    .ss-highlight {
-      position: relative; display: inline-block;
-    }
-    .ss-highlight::after {
-      content: ''; position: absolute; inset: -3px -6px;
-      border: 2px solid #60CDFF; border-radius: 4px;
-      animation: blink 1.2s ease-in-out infinite;
-    }
+    .ss-highlight { position: relative; display: inline-block; }
+    .ss-highlight::after { content: ''; position: absolute; inset: -3px -6px; border: 2px solid #60CDFF; border-radius: 4px; animation: blink 1.2s ease-in-out infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
     .ss-step-label { font-size: 13px; font-weight: 600; color: #ddd; margin-bottom: 6px; }
     .ss-step-desc { font-size: 12px; color: var(--subtle); line-height: 1.5; }
 
-    /* ── Pricing ──────────────────────────────────────────────────────── */
     .pricing { padding: 96px 0; text-align: center; }
-    .pricing-card {
-      max-width: 420px; margin: 48px auto 0;
-      background: var(--card); border: 1px solid rgba(96,205,255,0.20);
-      border-radius: 16px; padding: 40px;
-      box-shadow: 0 0 60px rgba(96,205,255,0.06);
-    }
+    .pricing-card { max-width: 420px; margin: 48px auto 0; background: var(--card); border: 1px solid rgba(96,205,255,0.20); border-radius: 16px; padding: 40px; box-shadow: 0 0 60px rgba(96,205,255,0.06); }
     .pricing-plan { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
     .pricing-price { font-size: 52px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 6px; }
     .pricing-price sup { font-size: 24px; vertical-align: super; }
     .pricing-once { font-size: 12px; color: var(--subtle); margin-bottom: 32px; }
     .pricing-features { list-style: none; text-align: left; margin-bottom: 32px; }
-    .pricing-features li {
-      padding: 9px 0; border-bottom: 1px solid var(--border);
-      font-size: 14px; color: #ccc; display: flex; align-items: center; gap: 10px;
-    }
+    .pricing-features li { padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: #ccc; display: flex; align-items: center; gap: 10px; }
     .pricing-features li:last-child { border-bottom: none; }
     .pricing-features li::before { content: "✓"; color: var(--accent); font-weight: 700; }
-    .btn-buy {
-      display: block; width: 100%; background: var(--accent); color: #000;
-      font-weight: 700; font-size: 16px; padding: 15px; border-radius: 10px;
-      transition: opacity .2s, transform .15s; text-align: center;
-    }
+    .btn-buy { display: block; width: 100%; background: var(--accent); color: #000; font-weight: 700; font-size: 16px; padding: 15px; border-radius: 10px; transition: opacity .2s, transform .15s; text-align: center; }
     .btn-buy:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
     .pricing-note { font-size: 11px; color: #444; margin-top: 16px; }
     .pricing-guarantee { font-size: 12px; color: #606060; margin-top: 14px; }
     .pricing-guarantee strong { color: #808080; }
-    .pricing-spots {
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(255,160,40,0.06); border: 1px solid rgba(255,160,40,0.18);
-      border-radius: 8px; padding: 10px 14px; margin-bottom: 20px;
-    }
-    .pricing-spots-bar {
-      flex: 1; height: 5px; border-radius: 3px;
-      background: rgba(255,255,255,0.07); overflow: hidden;
-    }
-    .pricing-spots-fill {
-      height: 100%; border-radius: 3px;
-      background: linear-gradient(90deg, #FF9A00, #FFc040);
-      width: 0%; transition: width .8s ease;
-    }
+    .pricing-spots { display: flex; align-items: center; gap: 10px; background: rgba(255,160,40,0.06); border: 1px solid rgba(255,160,40,0.18); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; }
+    .pricing-spots-bar { flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.07); overflow: hidden; }
+    .pricing-spots-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #FF9A00, #FFc040); width: 0%; transition: width .8s ease; }
     .pricing-spots-label { font-size: 12px; color: #FF9A00; font-weight: 700; white-space: nowrap; }
     .pricing-price-old { font-size: 16px; color: #555; text-decoration: line-through; margin-left: 8px; vertical-align: middle; }
 
-    /* ── Avis utilisateurs ───────────────────────────────────────────── */
     .reviews { padding: 80px 0; background: var(--bg2); }
     .reviews-header { text-align: center; margin-bottom: 52px; }
     .reviews-header .section-sub { margin: 0 auto; }
-
-    /* Cards d'avis */
-    .reviews-list {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 20px; margin-bottom: 48px; min-height: 0;
-    }
-    .review-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px 24px 20px;
-      display: flex; flex-direction: column; gap: 12px;
-    }
+    .reviews-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-bottom: 48px; min-height: 0; }
+    .review-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 24px 20px; display: flex; flex-direction: column; gap: 12px; }
     .review-stars { color: #FFB800; font-size: 14px; letter-spacing: 1px; }
-    .review-text {
-      font-size: 14px; color: #ccc; line-height: 1.65;
-      flex: 1; font-style: italic;
-    }
+    .review-text { font-size: 14px; color: #ccc; line-height: 1.65; flex: 1; font-style: italic; }
     .review-text::before { content: '\201C'; }
     .review-text::after  { content: '\201D'; }
     .review-meta { display: flex; flex-direction: column; gap: 3px; }
     .review-name { font-size: 13px; font-weight: 700; color: #fff; }
     .review-config { font-size: 11px; color: #555; }
-    .reviews-empty {
-      grid-column: 1/-1; text-align: center;
-      font-size: 14px; color: #444; padding: 24px 0;
-    }
-
-    /* Formulaire */
-    .review-form-wrap {
-      max-width: 600px; margin: 0 auto;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 32px 36px;
-    }
-    .review-form-title {
-      font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px;
-    }
+    .reviews-empty { grid-column: 1/-1; text-align: center; font-size: 14px; color: #444; padding: 24px 0; }
+    .review-form-wrap { max-width: 600px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 36px; }
+    .review-form-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px; }
     .review-form-sub { font-size: 13px; color: var(--subtle); margin-bottom: 24px; }
     .review-stars-input { display: flex; gap: 6px; margin-bottom: 18px; }
     .review-stars-input input[type="radio"] { display: none; }
-    .review-stars-input label {
-      font-size: 22px; cursor: pointer; color: #333;
-      transition: color .15s; user-select: none;
-    }
-    .review-stars-input label:hover,
-    .review-stars-input label:hover ~ label { color: #333; }
+    .review-stars-input label { font-size: 22px; cursor: pointer; color: #333; transition: color .15s; user-select: none; }
+    .review-stars-input label:hover, .review-stars-input label:hover ~ label { color: #333; }
     .review-stars-input input:checked ~ label { color: #333; }
-    .review-stars-input label:hover,
-    .star-label-active { color: #FFB800 !important; }
-    .review-field {
-      width: 100%; background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border); border-radius: 8px;
-      color: var(--text); font-family: inherit; font-size: 14px;
-      padding: 11px 14px; margin-bottom: 12px;
-      transition: border-color .2s; outline: none;
-    }
+    .review-stars-input label:hover, .star-label-active { color: #FFB800 !important; }
+    .review-field { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: inherit; font-size: 14px; padding: 11px 14px; margin-bottom: 12px; transition: border-color .2s; outline: none; }
     .review-field:focus { border-color: rgba(96,205,255,0.35); }
     .review-field::placeholder { color: #444; }
     textarea.review-field { resize: vertical; min-height: 100px; }
     .review-hp { display: none; }
     .review-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .review-submit {
-      width: 100%; background: var(--accent); color: #000;
-      font-weight: 700; font-size: 14px; padding: 13px;
-      border-radius: 9px; border: none; cursor: pointer;
-      transition: opacity .2s, transform .15s; margin-top: 4px;
-    }
+    .review-submit { width: 100%; background: var(--accent); color: #000; font-weight: 700; font-size: 14px; padding: 13px; border-radius: 9px; border: none; cursor: pointer; transition: opacity .2s, transform .15s; margin-top: 4px; }
     .review-submit:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
     .review-submit:disabled { opacity: .4; cursor: not-allowed; }
-    .review-feedback {
-      margin-top: 14px; font-size: 13px; text-align: center;
-      padding: 10px 14px; border-radius: 8px; display: none;
-    }
+    .review-feedback { margin-top: 14px; font-size: 13px; text-align: center; padding: 10px 14px; border-radius: 8px; display: none; }
     .review-feedback.ok  { background: rgba(96,205,255,0.08); color: var(--accent); border: 1px solid rgba(96,205,255,0.20); }
     .review-feedback.err { background: rgba(255,96,96,0.08); color: #FF8080; border: 1px solid rgba(255,96,96,0.20); }
     .review-moderation { font-size: 11px; color: #444; text-align: center; margin-top: 12px; }
@@ -660,7 +347,6 @@
       .review-form-wrap { padding: 24px 20px; }
     }
 
-    /* ── FAQ ──────────────────────────────────────────────────────────── */
     .faq { padding: 80px 0; background: var(--bg); }
     .faq-header { text-align: center; margin-bottom: 48px; }
     .faq-grid { max-width: 720px; margin: 0 auto; display: grid; gap: 16px; }
@@ -669,104 +355,55 @@
     .faq-a { font-size: 14px; color: var(--subtle); line-height: 1.7; }
     .faq-a code { background: rgba(255,255,255,0.07); border-radius: 4px; padding: 1px 6px; font-size: 12px; font-family: 'Consolas', monospace; }
 
-    /* ── Footer ───────────────────────────────────────────────────────── */
     footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; font-size: 12px; color: #444; }
     footer a { color: #555; }
     footer a:hover { color: #999; }
 
-    /* ── Creators / Pros ─────────────────────────────────────────────── */
     .creators { padding: 96px 0; background: var(--bg2); }
     .creators-header { text-align: center; margin-bottom: 60px; }
     .creators-header .section-sub { margin: 0 auto; }
-    .creators-row {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: center; margin-bottom: 60px;
-    }
+    .creators-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 60px; }
     .curve-demo-wrap { display: flex; flex-direction: column; align-items: center; }
-    .curve-demo {
-      width: 100%; max-width: 380px;
-      background: #111113; border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 12px; overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(210,64,64,0.06);
-    }
-    .curve-demo-bar {
-      background: #0d0d0f; border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding: 10px 14px; display: flex; align-items: center; gap: 10px;
-    }
+    .curve-demo { width: 100%; max-width: 380px; background: #111113; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(210,64,64,0.06); }
+    .curve-demo-bar { background: #0d0d0f; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
     .curve-ch-tabs { display: flex; gap: 6px; margin-left: auto; }
-    .curve-ch {
-      font-size: 11px; font-weight: 800; width: 22px; height: 22px;
-      border-radius: 5px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background .2s;
-    }
+    .curve-ch { font-size: 11px; font-weight: 800; width: 22px; height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
     .curve-ch.ch-active-r { background: rgba(210,64,64,0.18); color: #D94040; }
     .curve-canvas { padding: 16px 16px 8px; }
     .curve-canvas svg { display: block; width: 100%; height: auto; }
     .curve-footer { padding: 8px 14px 12px; display: flex; align-items: center; gap: 8px; }
-    .curve-chip-r {
-      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
-      color: #D94040; background: rgba(210,64,64,0.10);
-    }
+    .curve-chip-r { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; color: #D94040; background: rgba(210,64,64,0.10); }
     .curve-chip-off { font-size: 10px; font-weight: 700; padding: 3px 8px; color: #333; }
-    .curve-btn {
-      font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 5px;
-      background: rgba(96,205,255,0.08); border: 1px solid rgba(96,205,255,0.20);
-      color: var(--accent); cursor: pointer;
-    }
+    .curve-btn { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 5px; background: rgba(96,205,255,0.08); border: 1px solid rgba(96,205,255,0.20); color: var(--accent); cursor: pointer; }
     .curve-btn-icc { background: rgba(210,64,64,0.08); border-color: rgba(210,64,64,0.22); color: #D94040; }
     .curve-caption { font-size: 11px; color: #3a3a3a; margin-top: 12px; text-align: center; }
-    /* Creator bullets */
     .creators-bullets { display: flex; flex-direction: column; gap: 28px; }
     .creator-bullet { display: flex; gap: 16px; align-items: flex-start; }
-    .cb-icon-wrap {
-      font-size: 18px; width: 36px; height: 36px; border-radius: 9px;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
+    .cb-icon-wrap { font-size: 18px; width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .cb-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; }
     .cb-desc { font-size: 13px; color: var(--subtle); line-height: 1.6; }
     .cb-desc em { color: #aaa; font-style: normal; }
-    /* Creator bottom cards */
     .creators-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .creator-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px; transition: border-color .2s;
-    }
+    .creator-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: border-color .2s; }
     .creator-card:hover { border-color: rgba(96,205,255,0.20); }
     .creator-card-icon { font-size: 28px; display: block; margin-bottom: 14px; }
     .creator-card-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
     .creator-card-desc { font-size: 13px; color: var(--subtle); line-height: 1.6; }
 
-    /* ── Pourquoi Lumina ────────────────────────────────────────────── */
     .why { padding: 80px 0 64px; }
     .why-header { text-align: center; margin-bottom: 52px; }
     .why-header .section-sub { margin: 0 auto; }
-    .why-grid {
-      display: grid; grid-template-columns: repeat(4,1fr); gap: 20px;
-      margin-bottom: 64px;
-    }
-    .why-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px 22px;
-      transition: border-color .2s;
-    }
+    .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-bottom: 64px; }
+    .why-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 22px; transition: border-color .2s; }
     .why-card:hover { border-color: rgba(96,205,255,0.22); }
     .why-icon { font-size: 26px; margin-bottom: 14px; }
     .why-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
     .why-desc { font-size: 13px; color: var(--subtle); line-height: 1.6; }
 
-    /* ── Pour qui ────────────────────────────────────────────────────── */
     .forwho { border-top: 1px solid var(--border); padding-top: 56px; }
     .forwho-label { text-align: center; margin-bottom: 28px; }
-    .forwho-grid {
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
-    }
-    .forwho-item {
-      display: flex; align-items: flex-start; gap: 14px;
-      padding: 20px 18px; background: rgba(255,255,255,0.025);
-      border: 1px solid var(--border); border-radius: var(--radius);
-      transition: border-color .2s;
-    }
+    .forwho-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .forwho-item { display: flex; align-items: flex-start; gap: 14px; padding: 20px 18px; background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: var(--radius); transition: border-color .2s; }
     .forwho-item:hover { border-color: rgba(96,205,255,0.18); }
     .forwho-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
     .forwho-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; }
@@ -776,7 +413,6 @@
     .lang-switch a { color: var(--accent); font-weight: 600; }
     .lang-switch a:hover { text-decoration: underline; }
 
-    /* ── Responsive ───────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .hero .container { grid-template-columns: 1fr; gap: 48px; }
       .hero { padding: 64px 0 48px; }
@@ -797,22 +433,22 @@
 <body>
 
 <!-- Language switcher -->
-<div class="lang-switch">🌐 <a href="en.html" onclick="sessionStorage.setItem('lc-lang','en')">English</a></div>
+<div class="lang-switch">🌐 <a href="./" onclick="sessionStorage.setItem('lc-lang','fr')">Français</a></div>
 
 <!-- ── Early-access banner ───────────────────────────────────────────────── -->
 <div class="ea-banner" id="ea-banner">
   <div class="container ea-banner-inner">
     <span class="ea-tag">Early Access</span>
-    <span class="ea-text"><strong>Offre de lancement</strong> — prix définitif</span>
-    <span class="ea-price-old">9,99 €</span>
-    <span class="ea-price-new">4,80 €</span>
+    <span class="ea-text"><strong>Launch offer</strong> — final price</span>
+    <span class="ea-price-old">€9.99</span>
+    <span class="ea-price-new">€4.80</span>
     <div class="ea-spots">
       <div class="ea-spots-bar"><div class="ea-spots-fill" id="ea-fill"></div></div>
-      <span class="ea-spots-label" id="ea-spots-label">19 places restantes</span>
+      <span class="ea-spots-label" id="ea-spots-label">19 spots left</span>
     </div>
-    <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/ae9ee0d1-c6cb-43ba-b545-b71976163c64" class="ea-cta">En profiter →</a>
+    <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/ae9ee0d1-c6cb-43ba-b545-b71976163c64" class="ea-cta">Get it →</a>
   </div>
-  <button class="ea-close" id="ea-close" aria-label="Fermer">✕</button>
+  <button class="ea-close" id="ea-close" aria-label="Close">✕</button>
 </div>
 
 <!-- ── Navigation ──────────────────────────────────────────────────────────── -->
@@ -820,14 +456,14 @@
   <div class="container nav-inner">
     <div class="nav-logo">Lumina<span>Control</span></div>
     <div class="nav-links">
-      <a href="#why">Pourquoi</a>
-      <a href="#features">Fonctionnalités</a>
-      <a href="#creators">Créateurs & Pros</a>
-      <a href="#comparison">Comparatif</a>
-      <a href="#pricing">Tarif</a>
-      <a href="#avis">Avis</a>
+      <a href="#why">Why</a>
+      <a href="#features">Features</a>
+      <a href="#creators">Creators &amp; Pros</a>
+      <a href="#comparison">Comparison</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#avis">Reviews</a>
       <a href="#faq">FAQ</a>
-      <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/ae9ee0d1-c6cb-43ba-b545-b71976163c64" class="btn-nav">Acheter</a>
+      <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/ae9ee0d1-c6cb-43ba-b545-b71976163c64" class="btn-nav">Buy</a>
     </div>
   </div>
 </nav>
@@ -839,29 +475,29 @@
 
     <div class="hero-content">
       <div class="hero-eyebrow">
-        <span class="badge">Windows 10 / 11 · Tous moniteurs</span>
+        <span class="badge">Windows 10 / 11 · All monitors</span>
       </div>
-      <h1>Vos moniteurs,<br><em>enfin intelligents.</em></h1>
-      <p class="sr-only">Lumina Control — logiciel de contrôle luminosité moniteur Windows DDC-CI, colorimétrie et calibrage couleurs écran, réglage automatique, alternative Twinkle Tray</p>
+      <h1>Your monitors,<br><em>finally smart.</em></h1>
+      <p class="sr-only">Lumina Control — monitor brightness control Windows DDC-CI, color calibration, colorimetry, automatic screen adjustment, Twinkle Tray alternative</p>
       <p class="hero-sub">
-        Lumina Control détecte ce que vous faites — jeu en plein écran,
-        application en focus, heure de la journée — et ajuste chaque écran
-        automatiquement. Sans driver tiers. Sans abonnement.
+        Lumina Control detects what you're doing — fullscreen gaming,
+        focused app, time of day — and adjusts every screen
+        automatically. No third-party driver. No subscription.
       </p>
       <div class="hero-actions">
-        <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda" class="btn-primary">Acheter — 4,80 €</a>
-        <a href="#features" class="btn-secondary">Voir les fonctionnalités</a>
+        <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda" class="btn-primary">Buy — €4.80</a>
+        <a href="#features" class="btn-secondary">See features</a>
       </div>
       <div class="hero-note">
-        Activation hors ligne <span>·</span> Paiement unique <span>·</span> Mises à jour incluses <span>·</span> FR / EN
+        Offline activation <span>·</span> One-time payment <span>·</span> Updates included <span>·</span> FR / EN
       </div>
     </div>
 
     <div class="hero-visual">
       <div class="hero-visual-wrap">
         <div class="view-toggle">
-          <button class="view-btn active" id="btn-interactive">⚡ Interactif</button>
-          <button class="view-btn" id="btn-video">▶ Vidéo démo</button>
+          <button class="view-btn active" id="btn-interactive">⚡ Interactive</button>
+          <button class="view-btn" id="btn-video">▶ Demo video</button>
         </div>
 
         <div id="view-interactive">
@@ -892,7 +528,7 @@
 
         <div class="int-modes">
           <div class="int-mode active" data-mode="normal">Normal</div>
-          <div class="int-mode" data-mode="nuit">🌙 Nuit</div>
+          <div class="int-mode" data-mode="nuit">🌙 Night</div>
           <div class="int-mode" data-mode="gaming">🎮 Gaming</div>
           <div class="int-mode" data-mode="focus">🎯 Focus</div>
         </div>
@@ -900,7 +536,7 @@
         <div class="int-card">
           <div class="int-card-header">
             <span class="int-mon-name">DELL U2722D</span>
-            <span class="int-mon-pos" id="mon-pos">Principal</span>
+            <span class="int-mon-pos" id="mon-pos">Primary</span>
           </div>
           <div class="int-row">
             <span class="int-lbl">Bri</span>
@@ -926,7 +562,7 @@
           <div class="int-card2-inner">
             <div class="int-card2-header">
               <span style="font-size:11px;font-weight:700;color:#555">LG 27UK850</span>
-              <span class="int-dim-badge">Atténué — Focus</span>
+              <span class="int-dim-badge">Dimmed — Focus</span>
             </div>
             <div class="int-row" style="margin-bottom:0">
               <span class="int-lbl">Bri</span>
@@ -938,9 +574,9 @@
 
         <div class="int-status" id="int-status">
           <div class="dot"></div>
-          <span id="status-text">Mode circadien actif · Coucher 20:27</span>
+          <span id="status-text">Circadian mode active · Sunset 20:27</span>
         </div>
-        <div class="int-hint">↑ Essayez les modes</div>
+        <div class="int-hint">↑ Try the modes</div>
       </div>
         </div>
 
@@ -952,7 +588,7 @@
                 <span class="vf-dot y"></span>
                 <span class="vf-dot g"></span>
               </div>
-              <span class="vf-title">Lumina Control — Démo</span>
+              <span class="vf-title">Lumina Control — Demo</span>
             </div>
             <video autoplay loop muted playsinline id="demo-video">
               <source src="demo.mp4" type="video/mp4" />
@@ -972,95 +608,94 @@
   <div class="container os-strip-inner">
     <span class="os-item">🪟 <strong>Windows 10 &amp; 11</strong></span>
     <span class="os-sep">·</span>
-    <span class="os-item">🔌 <strong>Sans driver tiers</strong></span>
+    <span class="os-item">🔌 <strong>No third-party driver</strong></span>
     <span class="os-sep">·</span>
-    <span class="os-item">💻 <strong>DDC-CI + dalles laptop</strong></span>
+    <span class="os-item">💻 <strong>DDC-CI + laptop screens</strong></span>
     <span class="os-sep">·</span>
-    <span class="os-item">🔒 <strong>100 % hors ligne</strong></span>
+    <span class="os-item">🔒 <strong>100% offline</strong></span>
     <span class="os-sep">·</span>
-    <span class="os-item">💳 <strong>4,80 € · paiement unique</strong></span>
+    <span class="os-item">💳 <strong>€4.80 · one-time payment</strong></span>
   </div>
 </div>
 
 
-
-<!-- ── Pourquoi Lumina ──────────────────────────────────────────────────────── -->
+<!-- ── Why Lumina ──────────────────────────────────────────────────────────── -->
 <section class="why" id="why">
   <div class="container">
     <div class="why-header">
-      <p class="section-label">Pourquoi Lumina</p>
-      <h2 class="section-title">Windows a un curseur.<br>Lumina <em>automatise</em> tout le reste.</h2>
-      <p class="section-sub">Twinkle Tray est gratuit. Windows a le mode Nuit. L'OSD de votre moniteur fait le travail. Alors pourquoi Lumina Control ?</p>
+      <p class="section-label">Why Lumina</p>
+      <h2 class="section-title">Windows has a slider.<br>Lumina <em>automates</em> everything else.</h2>
+      <p class="section-sub">Twinkle Tray is free. Windows has Night Light. Your monitor's OSD does the job. So why Lumina Control?</p>
     </div>
 
     <div class="why-grid">
       <div class="why-card">
         <div class="why-icon">🤖</div>
-        <div class="why-title">Zéro manipulation manuelle</div>
-        <div class="why-desc">Détection gaming automatique, profil circadien calé sur le vrai lever du soleil, règles par application. Tout s'active seul en arrière-plan — vous n'y pensez plus.</div>
+        <div class="why-title">Zero manual adjustments</div>
+        <div class="why-desc">Automatic gaming detection, circadian profile locked to real sunrise, per-app rules. Everything activates on its own in the background — you never think about it.</div>
       </div>
       <div class="why-card">
         <div class="why-icon">🔌</div>
-        <div class="why-title">Aucun driver tiers</div>
-        <div class="why-desc">DDC-CI via l'API Windows native, gamma via GDI32, dalle laptop via WMI. Zéro driver kernel, zéro risque BSOD, désinstallation propre en 2 clics.</div>
+        <div class="why-title">No third-party driver</div>
+        <div class="why-desc">DDC-CI via the native Windows API, gamma via GDI32, laptop screen via WMI. Zero kernel driver, zero BSOD risk, clean uninstall in 2 clicks.</div>
       </div>
       <div class="why-card">
         <div class="why-icon">🖥️</div>
-        <div class="why-title">Tous vos écrans, y compris le laptop</div>
-        <div class="why-desc">DDC-CI pour les moniteurs externes, WMI pour la dalle intégrée. Un seul panneau, une seule interface — même configuration multi-écrans mixte.</div>
+        <div class="why-title">All your screens, including laptop</div>
+        <div class="why-desc">DDC-CI for external monitors, WMI for the built-in panel. One panel, one interface — even mixed multi-monitor setups.</div>
       </div>
       <div class="why-card">
         <div class="why-icon">🔒</div>
-        <div class="why-title">100% hors ligne, licence à vie</div>
-        <div class="why-desc">Activation par clé cryptographique locale. Pas de serveur, pas de compte, pas de télémétrie. Vous payez 4,80 € une fois, vous utilisez pour toujours.</div>
+        <div class="why-title">100% offline, lifetime licence</div>
+        <div class="why-desc">Local cryptographic key activation. No server, no account, no telemetry. Pay €4.80 once, use forever.</div>
       </div>
     </div>
 
     <div class="forwho">
       <div class="forwho-label">
-        <p class="section-label">Pour qui ?</p>
+        <p class="section-label">Who is it for?</p>
       </div>
       <div class="forwho-grid">
         <div class="forwho-item">
           <span class="forwho-icon">🖥️</span>
           <div>
-            <div class="forwho-title">Setup multi-moniteurs</div>
-            <div class="forwho-desc">Sync maître/esclave, position automatique (Gauche / Droite / Principal), profil indépendant par écran.</div>
+            <div class="forwho-title">Multi-monitor setups</div>
+            <div class="forwho-desc">Master/slave sync, automatic position detection (Left / Right / Primary), independent profile per screen.</div>
           </div>
         </div>
         <div class="forwho-item">
           <span class="forwho-icon">🎮</span>
           <div>
             <div class="forwho-title">Gamers</div>
-            <div class="forwho-desc">Preset luminosité/contraste appliqué dès qu'un jeu passe en plein écran — et annulé automatiquement à l'alt-tab.</div>
+            <div class="forwho-desc">Brightness/contrast preset applied as soon as a game goes fullscreen — and cancelled automatically on alt-tab.</div>
           </div>
         </div>
         <div class="forwho-item">
           <span class="forwho-icon">🎨</span>
           <div>
-            <div class="forwho-title">Photographes & coloristes</div>
-            <div class="forwho-desc">Éditeur de courbes tonales par canal, export ICC v2 compatible Lightroom, Photoshop et DaVinci Resolve.</div>
+            <div class="forwho-title">Photographers &amp; colorists</div>
+            <div class="forwho-desc">Per-channel tone curve editor, ICC v2 export compatible with Lightroom, Photoshop and DaVinci Resolve.</div>
           </div>
         </div>
         <div class="forwho-item">
           <span class="forwho-icon">🌙</span>
           <div>
-            <div class="forwho-title">Travailleurs du soir</div>
-            <div class="forwho-desc">Mode circadien calé sur le vrai lever/coucher du soleil de votre ville. Transition invisible toutes les 500 ms.</div>
+            <div class="forwho-title">Evening workers</div>
+            <div class="forwho-desc">Circadian mode locked to real sunrise/sunset for your city. Invisible transition every 500 ms.</div>
           </div>
         </div>
         <div class="forwho-item">
           <span class="forwho-icon">💻</span>
           <div>
-            <div class="forwho-title">Utilisateurs laptop</div>
-            <div class="forwho-desc">Contrôle de la dalle interne via WMI, contraste et gains RGB simulés via GPU — même sans DDC-CI.</div>
+            <div class="forwho-title">Laptop users</div>
+            <div class="forwho-desc">Built-in panel control via WMI, contrast and RGB gains simulated via GPU — even without DDC-CI.</div>
           </div>
         </div>
         <div class="forwho-item">
           <span class="forwho-icon">⚙️</span>
           <div>
             <div class="forwho-title">Power users</div>
-            <div class="forwho-desc">Règles par app + titre de fenêtre (regex), planification horaire par profil, raccourcis globaux configurables.</div>
+            <div class="forwho-desc">Per-app rules + window title (regex), hourly scheduling per profile, configurable global shortcuts.</div>
           </div>
         </div>
       </div>
@@ -1074,59 +709,59 @@
 <section class="features" id="features">
   <div class="container">
     <div class="features-header">
-      <p class="section-label">Fonctionnalités</p>
-      <h2 class="section-title">Tout automatisé.<br>Tout en un seul endroit.</h2>
+      <p class="section-label">Features</p>
+      <h2 class="section-title">Fully automated.<br>All in one place.</h2>
       <p class="section-sub">
-        Du mode circadien calé sur le soleil aux règles par application —
-        chaque fonctionnalité est là parce qu'elle manquait vraiment ailleurs.
+        From circadian mode locked to real sunrise to per-app rules —
+        every feature is there because it was truly missing elsewhere.
       </p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card">
         <span class="feature-icon">🌅</span>
-        <div class="feature-title">Mode circadien</div>
-        <div class="feature-desc">Synchronise automatiquement la luminosité et la teinte chaude avec le lever et le coucher du soleil de votre ville. Courbe sinusoïdale invisible, sans saut brutal.</div>
+        <div class="feature-title">Circadian mode</div>
+        <div class="feature-desc">Automatically syncs brightness and warm tint with your city's real sunrise and sunset. Invisible sine curve, no sudden jumps.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🎮</span>
-        <div class="feature-title">Mode Gaming automatique</div>
-        <div class="feature-desc">Détecte le passage en plein écran et applique instantanément votre preset gaming. Retour automatique à l'arrêt. Activable aussi via <code>Ctrl+Alt+G</code> sans alt-tabber.</div>
+        <div class="feature-title">Auto gaming mode</div>
+        <div class="feature-desc">Detects fullscreen and instantly applies your gaming preset. Automatic revert on exit. Also triggerable via <code>Ctrl+Alt+G</code> without alt-tabbing.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">⏰</span>
-        <div class="feature-title">Planification horaire</div>
-        <div class="feature-desc">Appliquez un profil nommé sur une plage horaire précise — par ex. <em>"de 22h à 7h, passer en mode Cinéma"</em>. Gestion des jours de la semaine et minuit inclus.</div>
+        <div class="feature-title">Schedule by time</div>
+        <div class="feature-desc">Apply a named profile on a specific time range — e.g. <em>"from 10 PM to 7 AM, switch to Cinema mode"</em>. Day-of-week and midnight crossing supported.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">📋</span>
-        <div class="feature-title">Règles par application</div>
-        <div class="feature-desc">Chaque appli a son profil. Détection par nom de processus et par titre de fenêtre (regex) : VLC en lecture ≠ VLC en pause.</div>
+        <div class="feature-title">Per-app rules</div>
+        <div class="feature-desc">Each app gets its own profile. Detection by process name and window title (regex): VLC playing ≠ VLC paused.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🎯</span>
-        <div class="feature-title">Mode Focus</div>
-        <div class="feature-desc">Dim automatiquement les écrans inactifs pour garder votre attention sur la fenêtre en cours. Délai configurable de 0 à 5 secondes.</div>
+        <div class="feature-title">Focus mode</div>
+        <div class="feature-desc">Automatically dims inactive screens to keep your attention on the active window. Configurable delay from 0 to 5 seconds.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">⌨️</span>
-        <div class="feature-title">Raccourcis globaux</div>
-        <div class="feature-desc"><code>Ctrl+Alt+↑↓</code> luminosité, <code>Ctrl+Alt+F</code> Focus, <code>Ctrl+Alt+G</code> Gaming, <code>Ctrl+Alt+N</code> Nuit. Fonctionnent depuis n'importe quelle application.</div>
+        <div class="feature-title">Global shortcuts</div>
+        <div class="feature-desc"><code>Ctrl+Alt+↑↓</code> brightness, <code>Ctrl+Alt+F</code> Focus, <code>Ctrl+Alt+G</code> Gaming, <code>Ctrl+Alt+N</code> Night. Work from any application.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🎨</span>
-        <div class="feature-title">Calibrage & courbes tonales</div>
-        <div class="feature-desc">Gains R/V/B DDC-CI, assistant 6 étapes et éditeur de courbes tonales par canal. Export profil ICC v2 compatible Photoshop, Lightroom et DaVinci Resolve.</div>
+        <div class="feature-title">Calibration &amp; tone curves</div>
+        <div class="feature-desc">DDC-CI R/G/B gains, 6-step calibration wizard and per-channel tone curve editor. ICC v2 profile export compatible with Photoshop, Lightroom and DaVinci Resolve.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">💾</span>
-        <div class="feature-title">Profils nommés</div>
-        <div class="feature-desc">Sauvegardez l'état complet de tous vos écrans sous un nom personnalisé. Rechargez en un clic depuis la barre des tâches.</div>
+        <div class="feature-title">Named profiles</div>
+        <div class="feature-desc">Save the complete state of all your screens under a custom name. Reload in one click from the system tray.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🔒</span>
-        <div class="feature-title">100% hors ligne</div>
-        <div class="feature-desc">Aucune donnée envoyée. Activation par clé cryptographique locale. Fonctionne sans connexion internet.</div>
+        <div class="feature-title">100% offline</div>
+        <div class="feature-desc">No data sent. Local cryptographic key activation. Works without an internet connection.</div>
       </div>
     </div>
   </div>
@@ -1137,24 +772,22 @@
 <section class="compat" id="compat">
   <div class="container">
     <div class="compat-header">
-      <p class="section-label">Compatibilité</p>
-      <h2 class="section-title">Mon écran est-il compatible ?</h2>
-      <p class="section-sub">Détection automatique depuis votre navigateur — aucune installation requise.</p>
+      <p class="section-label">Compatibility</p>
+      <h2 class="section-title">Is my monitor compatible?</h2>
+      <p class="section-sub">Auto-detection from your browser — no installation required.</p>
     </div>
 
     <div class="compat-box">
-      <!-- Scanning state -->
       <div class="compat-scanning" id="compat-scanning">
         <div class="compat-scan-ring"></div>
-        <p class="compat-scan-label">Analyse de votre configuration…</p>
+        <p class="compat-scan-label">Analysing your configuration…</p>
       </div>
 
-      <!-- Signals list (hidden until scan done) -->
       <div class="compat-signals" id="compat-signals">
         <div class="compat-signal-row" id="sig-os">
           <div class="compat-signal-icon" id="sig-os-icon">💻</div>
           <div class="compat-signal-text">
-            <div class="compat-signal-label">Système d'exploitation</div>
+            <div class="compat-signal-label">Operating system</div>
             <div class="compat-signal-value" id="sig-os-value">—</div>
           </div>
           <span class="compat-signal-badge" id="sig-os-badge">—</span>
@@ -1162,7 +795,7 @@
         <div class="compat-signal-row" id="sig-screens">
           <div class="compat-signal-icon" id="sig-screens-icon">🖥️</div>
           <div class="compat-signal-text">
-            <div class="compat-signal-label">Écrans détectés</div>
+            <div class="compat-signal-label">Screens detected</div>
             <div class="compat-signal-value" id="sig-screens-value">—</div>
           </div>
           <span class="compat-signal-badge" id="sig-screens-badge">—</span>
@@ -1170,7 +803,7 @@
         <div class="compat-signal-row" id="sig-res">
           <div class="compat-signal-icon ok">📐</div>
           <div class="compat-signal-text">
-            <div class="compat-signal-label">Résolution principale</div>
+            <div class="compat-signal-label">Primary resolution</div>
             <div class="compat-signal-value" id="sig-res-value">—</div>
           </div>
           <span class="compat-signal-badge ok" id="sig-res-badge">—</span>
@@ -1178,76 +811,74 @@
         <div class="compat-signal-row" id="sig-color">
           <div class="compat-signal-icon" id="sig-color-icon">🎨</div>
           <div class="compat-signal-text">
-            <div class="compat-signal-label">Profondeur de couleur</div>
+            <div class="compat-signal-label">Color depth</div>
             <div class="compat-signal-value" id="sig-color-value">—</div>
           </div>
           <span class="compat-signal-badge" id="sig-color-badge">—</span>
         </div>
       </div>
 
-      <!-- Verdict -->
       <div class="compat-verdict" id="compat-verdict">
         <div class="compat-verdict-title" id="verdict-title">—</div>
         <div class="compat-verdict-sub" id="verdict-sub">—</div>
       </div>
-      <p class="compat-disclaimer">La compatibilité DDC-CI exacte ne peut être confirmée que par l'application elle-même.</p>
-      <p class="compat-recheck" id="compat-recheck">↩ Relancer l'analyse</p>
+      <p class="compat-disclaimer">Exact DDC-CI compatibility can only be confirmed by the application itself.</p>
+      <p class="compat-recheck" id="compat-recheck">↩ Re-run analysis</p>
     </div>
   </div>
 </section>
 
 
-<!-- ── Comparaison ──────────────────────────────────────────────────────────── -->
+<!-- ── Comparison ──────────────────────────────────────────────────────────── -->
 <section class="comparison" id="comparison">
   <div class="container">
     <div class="comparison-header">
-      <p class="section-label">Comparatif</p>
-      <h2 class="section-title">Pourquoi pas Twinkle Tray ?</h2>
-      <p class="section-sub" style="margin:0 auto">Twinkle Tray est excellent pour le basique. Lumina Control est fait pour ceux qui veulent l'automatisation complète.</p>
+      <p class="section-label">Comparison</p>
+      <h2 class="section-title">Why not Twinkle Tray?</h2>
+      <p class="section-sub" style="margin:0 auto">Twinkle Tray is great for the basics. Lumina Control is built for those who want full automation.</p>
     </div>
     <table class="comparison-table">
       <thead>
         <tr>
-          <th style="width:45%">Fonctionnalité</th>
+          <th style="width:45%">Feature</th>
           <th class="col-lumina">Lumina Control</th>
           <th>Twinkle Tray</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Contrôle DDC-CI multi-écrans</td><td class="col-lumina check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Mode circadien (lever/coucher du soleil)</td><td class="col-lumina check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Planification horaire par profil</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Mode Gaming à détection automatique</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Règles par application + titre de fenêtre</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Mode Focus (dim les écrans inactifs)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Raccourcis globaux configurables</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Assistant de calibrage RGB 6 étapes</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Éditeur de courbes tonales (spline Fritsch-Carlson)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Export profil ICC v2 (Photoshop / Lightroom / Resolve)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Support dalles internes laptop (WMI)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
-        <tr><td>Activation hors ligne (pas de compte)</td><td class="col-lumina check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Prix</td><td class="col-lumina" style="color:#fff;font-weight:700">4,80 € une fois</td><td style="color:var(--subtle)">Gratuit</td></tr>
+        <tr><td>DDC-CI multi-monitor control</td><td class="col-lumina check">✓</td><td class="check">✓</td></tr>
+        <tr><td>Circadian mode (sunrise/sunset)</td><td class="col-lumina check">✓</td><td class="check">✓</td></tr>
+        <tr><td>Hourly scheduling per profile</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>Auto-detect gaming mode</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>Per-app rules + window title</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>Focus mode (dim inactive screens)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>Configurable global shortcuts</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>6-step RGB calibration wizard</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>Tone curve editor (Fritsch-Carlson spline)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>ICC v2 profile export (Photoshop / Lightroom / Resolve)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>Laptop built-in screen support (WMI)</td><td class="col-lumina check">✓</td><td class="cross">✗</td></tr>
+        <tr><td>Offline activation (no account)</td><td class="col-lumina check">✓</td><td class="check">✓</td></tr>
+        <tr><td>Price</td><td class="col-lumina" style="color:#fff;font-weight:700">€4.80 once</td><td style="color:var(--subtle)">Free</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
 
-<!-- ── Créateurs & Pros ──────────────────────────────────────────────────────── -->
+<!-- ── Creators & Pros ──────────────────────────────────────────────────────── -->
 <section class="creators" id="creators">
   <div class="container">
     <div class="creators-header">
-      <p class="section-label">Créateurs &amp; Pros</p>
-      <h2 class="section-title">Calibrage précis.<br><em>Exportez partout.</em></h2>
+      <p class="section-label">Creators &amp; Pros</p>
+      <h2 class="section-title">Precise calibration.<br><em>Export everywhere.</em></h2>
       <p class="section-sub">
-        Bien au-delà du slider DDC-CI — un vrai éditeur de courbes tonales par canal
-        avec export profil ICC v2. Vos logiciels de retouche et votre écran, enfin alignés.
+        Far beyond the DDC-CI slider — a real per-channel tone curve editor
+        with ICC v2 profile export. Your editing software and your screen, finally aligned.
       </p>
     </div>
 
     <div class="creators-row">
 
-      <!-- Mock curve editor -->
       <div class="curve-demo-wrap">
         <div class="curve-demo">
           <div class="curve-demo-bar">
@@ -1256,7 +887,7 @@
               <span class="vf-dot y"></span>
               <span class="vf-dot g"></span>
             </div>
-            <span style="font-size:11px;color:#444;margin-left:4px">Courbes tonales</span>
+            <span style="font-size:11px;color:#444;margin-left:4px">Tone curves</span>
             <div class="curve-ch-tabs">
               <span class="curve-ch ch-active-r">R</span>
               <span class="curve-ch" style="color:#555">G</span>
@@ -1265,22 +896,17 @@
           </div>
           <div class="curve-canvas">
             <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
-              <!-- Grid -->
               <line x1="50"  y1="0"   x2="50"  y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
               <line x1="100" y1="0"   x2="100" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
               <line x1="150" y1="0"   x2="150" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
               <line x1="0"   y1="40"  x2="200" y2="40"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
               <line x1="0"   y1="80"  x2="200" y2="80"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
               <line x1="0"   y1="120" x2="200" y2="120" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-              <!-- Diagonal reference -->
               <line x1="0" y1="160" x2="200" y2="0" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4 4"/>
-              <!-- Inactive G/B curves (ghosted) -->
               <path d="M 0 160 C 60 145 140 15 200 0" stroke="rgba(65,185,65,0.18)"  stroke-width="1.5" fill="none"/>
               <path d="M 0 160 C 60 145 140 15 200 0" stroke="rgba(65,110,220,0.18)" stroke-width="1.5" fill="none"/>
-              <!-- Active R curve (S-shape: lifted shadows, boosted highlights) -->
               <path d="M 0 160 C 50 156 68 132 100 78 C 132 24 162 3 200 0"
                     stroke="#D94040" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-              <!-- Control points -->
               <circle cx="0"   cy="160" r="4.5" fill="#D94040" stroke="#111113" stroke-width="1.5"/>
               <circle cx="52"  cy="132" r="4"   fill="#D94040" stroke="#111113" stroke-width="1.5"/>
               <circle cx="100" cy="78"  r="4"   fill="#D94040" stroke="#111113" stroke-width="1.5"/>
@@ -1293,62 +919,60 @@
             <span class="curve-chip-off">● G</span>
             <span class="curve-chip-off">● B</span>
             <div style="flex:1"></div>
-            <span class="curve-btn">Appliquer</span>
+            <span class="curve-btn">Apply</span>
             <span class="curve-btn curve-btn-icc">⬇ ICC</span>
           </div>
         </div>
-        <p class="curve-caption">Spline monotone cubique (Fritsch-Carlson 1980) — 5 points de contrôle</p>
+        <p class="curve-caption">Monotone cubic spline (Fritsch-Carlson 1980) — 5 control points</p>
       </div>
 
-      <!-- Feature bullets -->
       <div class="creators-bullets">
         <div class="creator-bullet">
           <div class="cb-icon-wrap">✏</div>
           <div>
-            <div class="cb-title">Éditeur de courbes tonales par canal</div>
-            <div class="cb-desc">Cliquez pour ajouter des points, glissez pour ajuster, clic droit pour supprimer. Algorithme Fritsch-Carlson 1980 — monotonie garantie, <em>zéro ringing</em>.</div>
+            <div class="cb-title">Per-channel tone curve editor</div>
+            <div class="cb-desc">Click to add points, drag to adjust, right-click to remove. Fritsch-Carlson 1980 algorithm — guaranteed monotone, <em>zero ringing</em>.</div>
           </div>
         </div>
         <div class="creator-bullet">
           <div class="cb-icon-wrap">🎨</div>
           <div>
-            <div class="cb-title">Export profil ICC v2 — Photoshop, Lightroom, Resolve</div>
-            <div class="cb-desc">Profil ICC v2 avec primaires sRGB adaptées D50 (Bradford) et vos courbes TRC custom. Importez-le dans vos outils pour que l'affichage et la retouche soient cohérents.</div>
+            <div class="cb-title">ICC v2 export — Photoshop, Lightroom, Resolve</div>
+            <div class="cb-desc">ICC v2 profile with D50-adapted sRGB primaries (Bradford) and your custom TRC curves. Import into your tools so display and editing stay consistent.</div>
           </div>
         </div>
         <div class="creator-bullet">
           <div class="cb-icon-wrap">🔗</div>
           <div>
-            <div class="cb-title">Composition non-destructive</div>
-            <div class="cb-desc">Mode Nuit, gamma GPU et chaleur se composent <em>par-dessus</em> vos courbes sans jamais les écraser. Activez la teinte chaude sans refaire le calibrage.</div>
+            <div class="cb-title">Non-destructive composition</div>
+            <div class="cb-desc">Night mode, GPU gamma and warmth compose <em>on top of</em> your curves without ever overwriting them. Enable warm tint without redoing your calibration.</div>
           </div>
         </div>
         <div class="creator-bullet">
           <div class="cb-icon-wrap">🖥</div>
           <div>
-            <div class="cb-title">Identification automatique via EDID</div>
-            <div class="cb-desc">Résolution en deux temps : driver GDI puis fallback registre EDID. Lumina affiche <em>"LG ULTRAWIDE"</em> et non <em>"Generic PnP Monitor"</em>.</div>
+            <div class="cb-title">Automatic identification via EDID</div>
+            <div class="cb-desc">Two-step resolution: GDI driver then EDID registry fallback. Lumina displays <em>"LG ULTRAWIDE"</em>, not <em>"Generic PnP Monitor"</em>.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Bottom persona cards -->
     <div class="creators-cards">
       <div class="creator-card">
         <span class="creator-card-icon">📸</span>
-        <div class="creator-card-title">Photographes</div>
-        <div class="creator-card-desc">Calibrez votre moniteur et exportez un profil ICC pour que Lightroom et Photoshop interprètent vos couleurs correctement lors du traitement des RAW.</div>
+        <div class="creator-card-title">Photographers</div>
+        <div class="creator-card-desc">Calibrate your monitor and export an ICC profile so Lightroom and Photoshop correctly interpret your colors when processing RAW files.</div>
       </div>
       <div class="creator-card">
         <span class="creator-card-icon">🎬</span>
-        <div class="creator-card-title">Vidéastes & coloristes</div>
-        <div class="creator-card-desc">Courbes S sur vos dalles de monitoring pour vérifier contraste et roll-off. L'export ICC aligne DaVinci Resolve et Premiere Pro sur votre affichage réel.</div>
+        <div class="creator-card-title">Videographers &amp; colorists</div>
+        <div class="creator-card-desc">S-curves on your monitoring panels to verify contrast and roll-off. ICC export aligns DaVinci Resolve and Premiere Pro with your actual display.</div>
       </div>
       <div class="creator-card">
         <span class="creator-card-icon">🎮</span>
         <div class="creator-card-title">Streamers</div>
-        <div class="creator-card-desc">Courbes custom pour une image de jeu fidèle sur vos deux écrans. Les règles par app appliquent automatiquement vos réglages dès qu'OBS est au premier plan.</div>
+        <div class="creator-card-desc">Custom curves for accurate game image across both screens. Per-app rules automatically apply your settings as soon as OBS comes to the foreground.</div>
       </div>
     </div>
   </div>
@@ -1360,80 +984,78 @@
   <div class="container">
     <div class="smartscreen-header">
       <p class="section-label">Installation</p>
-      <h2 class="section-title">Windows affiche un avertissement ?<br>C'est normal.</h2>
-      <p class="section-sub">Suivez ces 2 étapes simples pour installer Lumina Control en toute sécurité.</p>
+      <h2 class="section-title">Windows shows a warning?<br>That's normal.</h2>
+      <p class="section-sub">Follow these 2 simple steps to install Lumina Control safely.</p>
     </div>
 
     <div class="ss-why">
       <div class="ss-why-icon">ℹ️</div>
       <div>
-        Windows SmartScreen signale les logiciels qui ne possèdent pas de <strong>certificat de signature de code</strong>
-        — un certificat qui coûte plusieurs centaines d'euros par an, hors de portée pour un projet indépendant à 4,80 €.
-        Le code source de Lumina Control est <strong>disponible sur
-        <a href="https://github.com/lumina-control-app/LuminaControl" target="_blank">GitHub</a></strong> :
-        vous pouvez consulter le fonctionnement de l'application avant d'installer.
+        Windows SmartScreen flags software that doesn't have a <strong>code signing certificate</strong>
+        — a certificate that costs several hundred euros per year, out of reach for an independent project at €4.80.
+        Lumina Control's source code is <strong>available on
+        <a href="https://github.com/lumina-control-app/LuminaControl" target="_blank">GitHub</a></strong>:
+        you can review how the application works before installing.
       </div>
     </div>
 
     <div class="ss-steps">
 
-      <!-- Étape 1 -->
       <div class="ss-step">
         <div class="ss-step-num">1</div>
         <div class="ss-dialog">
           <div class="ss-dialog-bar">
-            <span>Sécurité Windows</span>
+            <span>Windows Security</span>
             <span class="ss-dialog-x">✕</span>
           </div>
           <div class="ss-dialog-body">
             <div class="ss-shield">🛡️</div>
-            <div class="ss-dialog-title">Windows a protégé votre PC</div>
-            <div class="ss-dialog-text">Windows SmartScreen a empêché le démarrage d'une application non reconnue.</div>
+            <div class="ss-dialog-title">Windows protected your PC</div>
+            <div class="ss-dialog-text">Windows SmartScreen prevented an unrecognized app from starting.</div>
             <div class="ss-dialog-app">
-              <span>Application :</span>
+              <span>App:</span>
               <strong>LuminaControlSetup.exe</strong>
             </div>
             <div class="ss-highlight">
-              <span class="ss-link">Informations complémentaires</span>
+              <span class="ss-link">More info</span>
             </div>
             <div class="ss-btn-row">
-              <span class="ss-btn">Ne pas exécuter</span>
+              <span class="ss-btn">Don't run</span>
             </div>
           </div>
         </div>
-        <div class="ss-step-label">Cliquez "Informations complémentaires"</div>
-        <div class="ss-step-desc">Le lien bleu en bas de la fenêtre SmartScreen</div>
+        <div class="ss-step-label">Click "More info"</div>
+        <div class="ss-step-desc">The blue link at the bottom of the SmartScreen window</div>
       </div>
 
       <div class="ss-arrow">→</div>
 
-      <!-- Étape 2 -->
       <div class="ss-step">
         <div class="ss-step-num">2</div>
         <div class="ss-dialog">
           <div class="ss-dialog-bar">
-            <span>Sécurité Windows</span>
+            <span>Windows Security</span>
             <span class="ss-dialog-x">✕</span>
           </div>
           <div class="ss-dialog-body">
             <div class="ss-shield">🛡️</div>
-            <div class="ss-dialog-title">Windows a protégé votre PC</div>
-            <div class="ss-dialog-text">Windows SmartScreen a empêché le démarrage d'une application non reconnue.</div>
+            <div class="ss-dialog-title">Windows protected your PC</div>
+            <div class="ss-dialog-text">Windows SmartScreen prevented an unrecognized app from starting.</div>
             <div class="ss-dialog-app">
-              <span>Application :</span>
+              <span>App:</span>
               <strong>LuminaControlSetup.exe</strong>
-              <span style="display:block;margin-top:4px;">Éditeur : <em>Inconnu</em></span>
+              <span style="display:block;margin-top:4px;">Publisher: <em>Unknown</em></span>
             </div>
             <div class="ss-btn-row">
-              <span class="ss-btn">Ne pas exécuter</span>
+              <span class="ss-btn">Don't run</span>
               <span class="ss-highlight">
-                <span class="ss-btn primary">Exécuter quand même</span>
+                <span class="ss-btn primary">Run anyway</span>
               </span>
             </div>
           </div>
         </div>
-        <div class="ss-step-label">Cliquez "Exécuter quand même"</div>
-        <div class="ss-step-desc">Le bouton apparaît après l'étape 1</div>
+        <div class="ss-step-label">Click "Run anyway"</div>
+        <div class="ss-step-desc">The button appears after step 1</div>
       </div>
 
     </div>
@@ -1444,83 +1066,79 @@
 <!-- ── Pricing ──────────────────────────────────────────────────────────────── -->
 <section class="pricing" id="pricing">
   <div class="container">
-    <p class="section-label">Tarif</p>
-    <h2 class="section-title">Simple. Une fois pour toutes.</h2>
-    <p class="section-sub" style="margin:0 auto">Pas d'abonnement. Pas de compte en ligne. Vous payez une fois, vous utilisez à vie.</p>
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title">Simple. Once and for all.</h2>
+    <p class="section-sub" style="margin:0 auto">No subscription. No online account. Pay once, use forever.</p>
     <div class="pricing-card">
-      <div class="pricing-plan">Licence Pro · Early Access</div>
-      <div class="pricing-price"><sup>€</sup>4,80 <span class="pricing-price-old">9,99 €</span></div>
-      <div class="pricing-once">Paiement unique — licence à vie</div>
+      <div class="pricing-plan">Pro Licence · Early Access</div>
+      <div class="pricing-price"><sup>€</sup>4.80 <span class="pricing-price-old">€9.99</span></div>
+      <div class="pricing-once">One-time payment — lifetime licence</div>
       <div class="pricing-spots">
         <div class="pricing-spots-bar"><div class="pricing-spots-fill" id="pricing-fill"></div></div>
-        <span class="pricing-spots-label" id="pricing-spots-label">… places restantes</span>
+        <span class="pricing-spots-label" id="pricing-spots-label">… spots left</span>
       </div>
       <ul class="pricing-features">
-        <li>Toutes les fonctionnalités incluses</li>
-        <li>Mises à jour gratuites</li>
-        <li>Activation hors ligne (jusqu'à 2 machines)</li>
-        <li>Support par email</li>
+        <li>All features included</li>
+        <li>Free updates</li>
+        <li>Offline activation (up to 2 machines)</li>
+        <li>Email support</li>
         <li>Windows 10 &amp; 11 (64-bit)</li>
       </ul>
-      <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda" class="btn-buy">Acheter maintenant — 4,80 €</a>
-      <div class="pricing-guarantee">🛡️ <strong>Remboursé sans question</strong> dans les 7 jours si ça ne fonctionne pas sur votre config.</div>
-      <div class="pricing-note">Paiement sécurisé via LemonSqueezy · CB, PayPal</div>
+      <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda" class="btn-buy">Buy now — €4.80</a>
+      <div class="pricing-guarantee">🛡️ <strong>Full refund, no questions asked</strong> within 7 days if it doesn't work on your config.</div>
+      <div class="pricing-note">Secure payment via LemonSqueezy · Card, PayPal</div>
     </div>
   </div>
 </section>
 
 
-<!-- ── Avis utilisateurs ─────────────────────────────────────────────────────── -->
+<!-- ── Reviews ─────────────────────────────────────────────────────────────── -->
 <section class="reviews" id="avis">
   <div class="container">
     <div class="reviews-header">
-      <p class="section-label">Avis</p>
-      <h2 class="section-title">Ce qu'ils en pensent</h2>
-      <p class="section-sub">Utilisateurs réels. Avis non modifiés, publiés après lecture.</p>
+      <p class="section-label">Reviews</p>
+      <h2 class="section-title">What users say</h2>
+      <p class="section-sub">Real users. Unedited reviews, published after reading.</p>
     </div>
 
-    <!-- Commentaires approuvés — chargés via JS -->
     <div class="reviews-list" id="reviews-list">
       <div class="reviews-empty" id="reviews-empty">
-        Soyez le premier à laisser un avis.
+        Be the first to leave a review.
       </div>
     </div>
 
-    <!-- Formulaire -->
     <div class="review-form-wrap">
-      <div class="review-form-title">Partager votre expérience</div>
-      <div class="review-form-sub">Sans compte. Votre avis sera publié après lecture (24–48 h).</div>
+      <div class="review-form-title">Share your experience</div>
+      <div class="review-form-sub">No account needed. Your review will be published after reading (24–48 h).</div>
 
       <form id="review-form" novalidate>
 
-        <!-- Étoiles -->
-        <div class="review-stars-input" id="stars-input" role="group" aria-label="Note">
+        <div class="review-stars-input" id="stars-input" role="group" aria-label="Rating">
           <input type="radio" name="rating" id="s5" value="5">
-          <label for="s5" title="5 étoiles">★</label>
+          <label for="s5" title="5 stars">★</label>
           <input type="radio" name="rating" id="s4" value="4">
-          <label for="s4" title="4 étoiles">★</label>
+          <label for="s4" title="4 stars">★</label>
           <input type="radio" name="rating" id="s3" value="3">
-          <label for="s3" title="3 étoiles">★</label>
+          <label for="s3" title="3 stars">★</label>
           <input type="radio" name="rating" id="s2" value="2">
-          <label for="s2" title="2 étoiles">★</label>
+          <label for="s2" title="2 stars">★</label>
           <input type="radio" name="rating" id="s1" value="1">
-          <label for="s1" title="1 étoile">★</label>
+          <label for="s1" title="1 star">★</label>
         </div>
 
         <div class="review-row">
-          <input type="text"  class="review-field" name="name"   placeholder="Prénom *" required maxlength="60">
-          <input type="text"  class="review-field" name="config" placeholder="Votre config (ex : 2 Dell + laptop)" maxlength="80">
+          <input type="text"  class="review-field" name="name"   placeholder="First name *" required maxlength="60">
+          <input type="text"  class="review-field" name="config" placeholder="Your setup (e.g. 2 Dell + laptop)" maxlength="80">
         </div>
-        <textarea class="review-field" name="comment" placeholder="Votre avis… (30 caractères minimum) *" required minlength="30" maxlength="800"></textarea>
+        <textarea class="review-field" name="comment" placeholder="Your review… (30 characters minimum) *" required minlength="30" maxlength="800"></textarea>
 
-        <!-- Honeypot — ne pas toucher -->
         <input class="review-hp" type="text" name="website" tabindex="-1" autocomplete="off">
 
         <button type="submit" class="review-submit" id="review-submit" disabled>
-          Envoyer l'avis
+          Submit review
         </button>
         <div class="review-feedback" id="review-feedback"></div>
-        <p class="review-moderation">🔍 Chaque avis est lu avant publication — aucune modération automatique ne supprime votre message.</p>
+        <p class="review-moderation">🔍 Every review is read before publication — no automated moderation removes your message.</p>
       </form>
     </div>
 
@@ -1533,43 +1151,43 @@
   <div class="container">
     <div class="faq-header">
       <p class="section-label">FAQ</p>
-      <h2 class="section-title">Questions fréquentes</h2>
+      <h2 class="section-title">Frequently asked questions</h2>
     </div>
     <div class="faq-grid">
 
       <div class="faq-item">
-        <div class="faq-q">Mon moniteur est-il compatible ?</div>
-        <div class="faq-a">Lumina Control fonctionne avec tous les moniteurs qui supportent le protocole <strong>DDC-CI</strong> (la quasi-totalité des écrans de bureau modernes). Assurez-vous que DDC-CI est activé dans le menu OSD de votre moniteur. Les dalles internes de laptops ne supportent pas DDC-CI, mais Lumina Control les contrôle via le backend WMI (Windows Management Instrumentation) pour la luminosité. Pour tous les écrans, l'éditeur de courbes tonales et le gamma GPU fonctionnent aussi sans DDC-CI.</div>
+        <div class="faq-q">Is my monitor compatible?</div>
+        <div class="faq-a">Lumina Control works with all monitors that support the <strong>DDC-CI</strong> protocol (the vast majority of modern desktop screens). Make sure DDC-CI is enabled in your monitor's OSD menu. Laptop built-in panels don't support DDC-CI, but Lumina Control controls them via the WMI backend for brightness. For all screens, the tone curve editor and GPU gamma work without DDC-CI.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Puis-je l'utiliser sur plusieurs PC ?</div>
-        <div class="faq-a">La licence Pro autorise l'installation sur <strong>2 machines</strong> simultanément. Si vous changez de PC, contactez le support pour une réactivation.</div>
+        <div class="faq-q">Can I use it on multiple PCs?</div>
+        <div class="faq-a">The Pro licence allows installation on <strong>2 machines</strong> simultaneously. If you change PC, contact support for a reactivation.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Ça fonctionne avec HDR ?</div>
-        <div class="faq-a">Le contrôle DDC-CI est désactivé par Windows lorsque HDR est actif sur un moniteur. Lumina Control utilise alors la LUT gamma GDI32 pour les ajustements de teinte et gamma, mais la luminosité DDC-CI ne sera pas disponible tant que HDR est activé.</div>
+        <div class="faq-q">Does it work with HDR?</div>
+        <div class="faq-a">DDC-CI control is disabled by Windows when HDR is active on a monitor. Lumina Control then uses the GDI32 gamma LUT for tint and gamma adjustments, but DDC-CI brightness won't be available while HDR is on.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Est-ce qu'il y a un essai gratuit ?</div>
-        <div class="faq-a">Pas d'essai pour le moment. Si le logiciel ne fonctionne pas correctement sur votre configuration dans les 7 jours suivant l'achat, contactez le support pour un remboursement complet.</div>
+        <div class="faq-q">Is there a free trial?</div>
+        <div class="faq-a">No trial at the moment. If the software doesn't work correctly on your configuration within 7 days of purchase, contact support for a full refund.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Quelle différence avec le mode nuit de Windows ?</div>
-        <div class="faq-a">Le mode nuit de Windows est une surcouche logicielle qui teinte l'écran en orange. Lumina Control agit directement sur le <strong>firmware du moniteur</strong> via DDC-CI : la luminosité physique baisse réellement, ce qui réduit la fatigue oculaire et la consommation électrique. Aucune surcouche, aucune dégradation des couleurs.</div>
+        <div class="faq-q">What's the difference from Windows Night Light?</div>
+        <div class="faq-a">Windows Night Light is a software overlay that tints the screen orange. Lumina Control acts directly on the <strong>monitor firmware</strong> via DDC-CI: physical brightness actually decreases, reducing eye strain and power consumption. No overlay, no color degradation.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">L'éditeur de courbes fonctionne-t-il sans DDC-CI ?</div>
-        <div class="faq-a">Oui — les courbes tonales et le gamma GPU (<code>SetDeviceGammaRamp</code>) passent par GDI32 et fonctionnent sur <strong>tous les écrans</strong>, même sans DDC-CI. L'export profil ICC v2 est également indépendant du DDC-CI. Seuls les gains R/V/B du premier onglet nécessitent une connexion DDC-CI active.</div>
+        <div class="faq-q">Does the curve editor work without DDC-CI?</div>
+        <div class="faq-a">Yes — tone curves and GPU gamma (<code>SetDeviceGammaRamp</code>) go through GDI32 and work on <strong>all screens</strong>, even without DDC-CI. ICC v2 profile export is also independent of DDC-CI. Only the R/G/B gains in the first tab require an active DDC-CI connection.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Puis-je importer le profil ICC dans Photoshop / Lightroom ?</div>
-        <div class="faq-a">Oui. Le profil ICC v2 généré par Lumina Control encode les primaires sRGB adaptées au point blanc D50 et vos courbes de correction dans les tags TRC. Importez-le dans Photoshop (Édition → Couleurs) ou définissez-le comme profil de l'écran dans les paramètres Windows pour que DaVinci Resolve, Lightroom et Premiere Pro le reconnaissent automatiquement.</div>
+        <div class="faq-q">Can I import the ICC profile into Photoshop / Lightroom?</div>
+        <div class="faq-a">Yes. The ICC v2 profile generated by Lumina Control encodes D50-adapted sRGB primaries and your correction curves in the TRC tags. Import it into Photoshop (Edit → Color Settings) or set it as your screen profile in Windows settings so DaVinci Resolve, Lightroom and Premiere Pro recognize it automatically.</div>
       </div>
 
     </div>
@@ -1585,7 +1203,7 @@
       &nbsp;·&nbsp;
       <a href="mailto:luminacontrolapp@gmail.com">luminacontrolapp@gmail.com</a>
     </p>
-    <p>© 2026 Lumina Control · Tous droits réservés</p>
+    <p>© 2026 Lumina Control · All rights reserved</p>
   </div>
 </footer>
 
@@ -1604,35 +1222,29 @@
     var modes      = document.querySelectorAll('.int-mode');
 
     var MODES = {
-      normal: { bri:72,  con:55, warm:0,  status:'Mode circadien actif · Coucher 20:27', gaming:false, focus:false },
-      nuit:   { bri:25,  con:45, warm:75, status:'🌙 Mode Nuit · Chaleur max', gaming:false, focus:false },
-      gaming: { bri:90,  con:80, warm:0,  status:'🎮 Mode Gaming · Preset appliqué', gaming:true,  focus:false },
-      focus:  { bri:80,  con:55, warm:10, status:'🎯 Focus · Écran inactif atténué à 30%', gaming:false, focus:true  },
+      normal: { bri:72,  con:55, warm:0,  status:'Circadian mode active · Sunset 20:27', gaming:false, focus:false },
+      nuit:   { bri:25,  con:45, warm:75, status:'🌙 Night Mode · Max warmth', gaming:false, focus:false },
+      gaming: { bri:90,  con:80, warm:0,  status:'🎮 Gaming Mode · Preset applied', gaming:true,  focus:false },
+      focus:  { bri:80,  con:55, warm:10, status:'🎯 Focus · Inactive screen dimmed to 30%', gaming:false, focus:true  },
     };
 
-    function setSlider(slider, val) {
-      slider.value = val;
-    }
+    function setSlider(slider, val) { slider.value = val; }
 
     function update() {
       var bri  = parseInt(sBri.value);
       var con  = parseInt(sCon.value);
       var warm = parseInt(sWarm.value);
-
       vBri.textContent  = bri  + '%';
       vCon.textContent  = con  + '%';
       vWarm.textContent = warm + '%';
-
       var accent = mockup.classList.contains('gaming') ? '#FF6060' : '#3BA8D8';
       sBri.style.background  = 'linear-gradient(90deg,' + accent + ' ' + bri  + '%,#333 ' + bri  + '%)';
       sCon.style.background  = 'linear-gradient(90deg,' + accent + ' ' + con  + '%,#333 ' + con  + '%)';
       sWarm.style.background = 'linear-gradient(90deg,#FFA040 ' + warm + '%,#333 ' + warm + '%)';
-
       var brightness = (bri  / 100) * 0.95 + 0.05;
       var contrast   = 0.6 + (con  / 100) * 0.8;
       var sepia      = (warm / 100) * 0.75;
       var saturate   = 1   + (warm / 100) * 0.5;
-
       screen.style.filter =
         'brightness(' + brightness.toFixed(2) + ') ' +
         'contrast('   + contrast.toFixed(2)   + ') ' +
@@ -1642,7 +1254,6 @@
 
     function applyMode(name) {
       var m = MODES[name];
-      // Transition douce sur les sliders
       var steps = 12, step = 0;
       var fromBri = parseInt(sBri.value), fromCon = parseInt(sCon.value), fromWarm = parseInt(sWarm.value);
       clearInterval(window._modeTimer);
@@ -1655,17 +1266,9 @@
         update();
         if (step >= steps) clearInterval(window._modeTimer);
       }, 25);
-
-      // Gaming state
       mockup.classList.toggle('gaming', m.gaming);
-
-      // Focus — 2e moniteur
       card2.classList.toggle('visible', m.focus);
-
-      // Status
       statusText.textContent = m.status;
-
-      // Boutons actifs
       modes.forEach(function(btn) {
         btn.classList.remove('active', 'gaming');
         if (btn.dataset.mode === name) {
@@ -1678,137 +1281,107 @@
     modes.forEach(function(btn) {
       btn.addEventListener('click', function() { applyMode(btn.dataset.mode); });
     });
-
     sBri.addEventListener('input',  update);
     sCon.addEventListener('input',  update);
     sWarm.addEventListener('input', update);
 
-    // Horloge
     function tick() {
       var now = new Date();
       document.getElementById('demo-clock').textContent =
         String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
     }
     tick(); setInterval(tick, 10000);
-
     update();
 
-    // ── Compat checker (auto-détection) ──────────────────────────────
+    // ── Compat checker ────────────────────────────────────────────────
     function runCompatScan() {
       var scanning = document.getElementById('compat-scanning');
       var signals  = document.getElementById('compat-signals');
       var verdict  = document.getElementById('compat-verdict');
       var recheck  = document.getElementById('compat-recheck');
-
-      // Reset state
       scanning.style.display = 'block';
       signals.style.display  = 'none';
       verdict.style.display  = 'none';
       verdict.style.opacity  = '0';
       recheck.style.display  = 'none';
-      document.querySelectorAll('.compat-signal-row').forEach(function(r) {
-        r.classList.remove('visible');
-      });
+      document.querySelectorAll('.compat-signal-row').forEach(function(r) { r.classList.remove('visible'); });
 
       setTimeout(function() {
-        // ── 1. OS detection ──────────────────────────────────────────
         var ua = navigator.userAgent || '';
-        var platform = (navigator.userAgentData && navigator.userAgentData.platform)
-                       || navigator.platform || '';
+        var platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
         var isWindows = /Windows/i.test(ua) || /Win/i.test(platform);
         var isWin10or11 = isWindows && /Windows NT 1[01]/i.test(ua);
         var osLabel, osBadge, osCls;
         if (isWin10or11) {
-          osLabel  = 'Windows 10 / 11 détecté';
-          osBadge  = 'Compatible';  osCls = 'ok';
+          osLabel = 'Windows 10 / 11 detected'; osBadge = 'Compatible'; osCls = 'ok';
         } else if (isWindows) {
-          osLabel  = 'Windows (version ancienne possible)';
-          osBadge  = 'Partiel'; osCls = 'warn';
+          osLabel = 'Windows (older version possible)'; osBadge = 'Partial'; osCls = 'warn';
         } else {
-          osLabel  = platform || ua.substring(0,40) || 'Système non identifié';
-          osBadge  = 'Non compatible'; osCls = 'no';
+          osLabel = platform || ua.substring(0,40) || 'System not identified'; osBadge = 'Not compatible'; osCls = 'no';
         }
         setSignal('sig-os', osCls, osLabel, osBadge);
 
-        // ── 2. Screen count ──────────────────────────────────────────
         var wscr = window.screen;
         var multiscreen = (wscr && 'isExtended' in wscr) ? wscr.isExtended : null;
         var screenW = wscr ? (wscr.width  || 0) : 0;
         var screenH = wscr ? (wscr.height || 0) : 0;
         var screenLabel, screenBadge, screenCls;
         if (multiscreen === true) {
-          screenLabel  = 'Plusieurs écrans détectés';
-          screenBadge  = 'Multi-moniteur'; screenCls = 'ok';
+          screenLabel = 'Multiple screens detected'; screenBadge = 'Multi-monitor'; screenCls = 'ok';
         } else {
-          // isExtended false OR unsupported — can't tell with certainty
-          screenLabel  = 'Non déterminé par le navigateur';
-          screenBadge  = '?'; screenCls = 'warn';
+          screenLabel = 'Not determined by browser'; screenBadge = '?'; screenCls = 'warn';
         }
         setSignal('sig-screens', screenCls, screenLabel, screenBadge);
 
-        // Inject "count precisely" button if getScreenDetails API is available
         if ('getScreenDetails' in window) {
           var valEl = document.getElementById('sig-screens-value');
           var old = valEl.querySelector('.compat-detect-btn');
           if (old) old.remove();
           var detectBtn = document.createElement('button');
           detectBtn.className = 'compat-detect-btn';
-          detectBtn.textContent = '🔍 Compter précisément';
+          detectBtn.textContent = '🔍 Count precisely';
           detectBtn.addEventListener('click', function() {
             detectBtn.disabled = true;
-            detectBtn.textContent = 'Demande de permission…';
+            detectBtn.textContent = 'Requesting permission…';
             window.getScreenDetails().then(function(details) {
               var count = details.screens.length;
               var cls   = count > 1 ? 'ok' : 'warn';
-              var lbl   = count + ' écran' + (count > 1 ? 's' : '') + ' détecté' + (count > 1 ? 's' : '');
-              var bdg   = count > 1 ? count + ' écrans' : '1 écran';
+              var lbl   = count + ' screen' + (count > 1 ? 's' : '') + ' detected';
+              var bdg   = count > 1 ? count + ' screens' : '1 screen';
               setSignal('sig-screens', cls, lbl, bdg);
-              // Recalculate verdict with updated multiscreen value
               updateVerdict(isWindows, isWin10or11, count > 1);
             }).catch(function() {
               detectBtn.disabled = false;
-              detectBtn.textContent = '🔍 Compter précisément';
+              detectBtn.textContent = '🔍 Count precisely';
             });
           });
           valEl.appendChild(detectBtn);
         }
 
-        // ── 3. Resolution ────────────────────────────────────────────
         var dpr = window.devicePixelRatio || 1;
         var physW = Math.round(screenW * dpr), physH = Math.round(screenH * dpr);
         var resLabel  = physW + ' × ' + physH + 'px';
-        var resBadge  = (physW >= 1920) ? 'Full HD +' : (physW >= 1280 ? 'HD' : 'Basse résolution');
+        var resBadge  = (physW >= 1920) ? 'Full HD+' : (physW >= 1280 ? 'HD' : 'Low resolution');
         var resCls    = (physW >= 1280) ? 'ok' : 'warn';
         setSignal('sig-res', resCls, resLabel, resBadge);
 
-        // ── 4. Color depth ───────────────────────────────────────────
         var depth = (wscr && wscr.colorDepth) || 0;
-        var colorLabel = depth ? depth + ' bits par pixel' : 'Non détectée';
+        var colorLabel = depth ? depth + ' bits per pixel' : 'Not detected';
         var colorBadge, colorCls;
-        if (depth >= 24) { colorBadge = 'Couleurs vraies'; colorCls = 'ok'; }
-        else if (depth > 0) { colorBadge = 'Limité'; colorCls = 'warn'; }
+        if (depth >= 24) { colorBadge = 'True color'; colorCls = 'ok'; }
+        else if (depth > 0) { colorBadge = 'Limited'; colorCls = 'warn'; }
         else { colorBadge = '?'; colorCls = 'warn'; }
         setSignal('sig-color', colorCls, colorLabel, colorBadge);
 
-        // Show signals with staggered animation
         scanning.style.display = 'none';
         signals.style.display  = 'block';
         var rows = document.querySelectorAll('.compat-signal-row');
-        rows.forEach(function(row, i) {
-          setTimeout(function() { row.classList.add('visible'); }, i * 120);
-        });
-
-        // ── Initial verdict (may be updated after getScreenDetails) ──
+        rows.forEach(function(row, i) { setTimeout(function() { row.classList.add('visible'); }, i * 120); });
         updateVerdict(isWindows, isWin10or11, multiscreen === true);
-
         setTimeout(function() {
           verdict.style.display = 'block';
-          setTimeout(function() {
-            verdict.style.opacity = '1';
-            recheck.style.display = 'block';
-          }, 40);
+          setTimeout(function() { verdict.style.opacity = '1'; recheck.style.display = 'block'; }, 40);
         }, rows.length * 120 + 200);
-
       }, 1400);
     }
 
@@ -1816,21 +1389,17 @@
       var verdict = document.getElementById('compat-verdict');
       var vCls, vTitle, vSub;
       if (!isWindows) {
-        vCls   = 'no';
-        vTitle = 'Non compatible';
-        vSub   = 'Lumina Control est une application Windows exclusivement. DDC-CI est une API Windows — il n\'existe pas d\'équivalent Linux ou macOS.';
+        vCls = 'no'; vTitle = 'Not compatible';
+        vSub = 'Lumina Control is a Windows-only application. DDC-CI is a Windows API — there is no Linux or macOS equivalent.';
       } else if (!isWin10or11) {
-        vCls   = 'warn';
-        vTitle = 'Compatibilité incertaine';
-        vSub   = 'Lumina Control requiert Windows 10 ou 11. Votre version de Windows pourrait poser des problèmes.';
+        vCls = 'warn'; vTitle = 'Uncertain compatibility';
+        vSub = 'Lumina Control requires Windows 10 or 11. Your Windows version may cause issues.';
       } else if (hasMultiscreen) {
-        vCls   = 'ok';
-        vTitle = 'Configuration multi-écrans — Très probablement compatible';
-        vSub   = 'Windows 10/11 + plusieurs moniteurs = le scénario idéal pour Lumina Control. Si vos écrans supportent DDC-CI (la quasi-totalité des moniteurs de bureau modernes), l\'app les contrôlera immédiatement.';
+        vCls = 'ok'; vTitle = 'Multi-monitor setup — Very likely compatible';
+        vSub = 'Windows 10/11 + multiple monitors = the ideal scenario for Lumina Control. If your monitors support DDC-CI (the vast majority of modern desktop screens), the app will control them immediately.';
       } else {
-        vCls   = 'ok';
-        vTitle = 'Probablement compatible';
-        vSub   = 'Windows 10/11 détecté. Les moniteurs externes (HDMI, DisplayPort) supportent DDC-CI dans 95 % des cas. Les dalles intégrées de laptop sont contrôlées via WMI — luminosité et courbes tonales fonctionnent même sans DDC-CI.';
+        vCls = 'ok'; vTitle = 'Probably compatible';
+        vSub = 'Windows 10/11 detected. External monitors (HDMI, DisplayPort) support DDC-CI in 95% of cases. Laptop built-in panels are controlled via WMI — brightness and tone curves work even without DDC-CI.';
       }
       verdict.className = 'compat-verdict ' + vCls;
       document.getElementById('verdict-title').textContent = vTitle;
@@ -1849,44 +1418,30 @@
     document.getElementById('compat-recheck').addEventListener('click', runCompatScan);
     runCompatScan();
 
-    // ── Avis utilisateurs ─────────────────────────────────────────────
+    // ── Reviews ───────────────────────────────────────────────────────
     (function() {
-
-      // ── Config — remplace ces deux URLs par tes endpoints Pipedream ──
       var REVIEWS_GET_URL  = 'https://script.google.com/macros/s/AKfycbxYbnARvXS0R8Lq0RYKuwlYXS2ANBOHe3WjY4HLJB4iEnkYtlncP1g6sCG74Qn8eb6Q/exec';
       var REVIEWS_POST_URL = 'https://script.google.com/macros/s/AKfycbxYbnARvXS0R8Lq0RYKuwlYXS2ANBOHe3WjY4HLJB4iEnkYtlncP1g6sCG74Qn8eb6Q/exec';
-      // ────────────────────────────────────────────────────────────────
 
       var _pageLoadTime = Date.now();
-      var GUARD_MS      = 8000;   // 8 s avant d'activer le bouton
+      var GUARD_MS      = 8000;
       var MIN_CHARS     = 30;
 
-      // Activer le bouton après la garde temporelle
       var submitBtn = document.getElementById('review-submit');
-      var _guardTimer = setTimeout(function() {
-        submitBtn.disabled = false;
-      }, GUARD_MS);
+      setTimeout(function() { submitBtn.disabled = false; }, GUARD_MS);
 
-      // ── Étoiles interactives (ordre RTL via CSS, on corrige en JS) ──
       var starsWrap = document.getElementById('stars-input');
       var starLabels = starsWrap.querySelectorAll('label');
       var selectedRating = 0;
 
-      // L'ordre HTML est 5→1 (radio RTL trick CSS).
-      // En JS on lit la valeur du radio coché.
       starsWrap.addEventListener('mouseover', function(e) {
         if (e.target.tagName !== 'LABEL') return;
         var val = parseInt(e.target.previousElementSibling && e.target.previousElementSibling.value || 0);
         highlightStars(val);
       });
-      starsWrap.addEventListener('mouseout', function() {
-        highlightStars(selectedRating);
-      });
+      starsWrap.addEventListener('mouseout', function() { highlightStars(selectedRating); });
       starsWrap.addEventListener('change', function(e) {
-        if (e.target.type === 'radio') {
-          selectedRating = parseInt(e.target.value);
-          highlightStars(selectedRating);
-        }
+        if (e.target.type === 'radio') { selectedRating = parseInt(e.target.value); highlightStars(selectedRating); }
       });
 
       function highlightStars(n) {
@@ -1896,7 +1451,6 @@
         });
       }
 
-      // ── Chargement des avis approuvés ───────────────────────────────
       function renderReviews(reviews) {
         var list  = document.getElementById('reviews-list');
         var empty = document.getElementById('reviews-empty');
@@ -1904,9 +1458,7 @@
         empty.style.display = 'none';
         reviews.forEach(function(r) {
           var stars = '';
-          if (r.rating) {
-            for (var i = 0; i < 5; i++) stars += i < r.rating ? '★' : '☆';
-          }
+          if (r.rating) { for (var i = 0; i < 5; i++) stars += i < r.rating ? '★' : '☆'; }
           var card = document.createElement('div');
           card.className = 'review-card';
           card.innerHTML =
@@ -1921,125 +1473,93 @@
       }
 
       function escHtml(s) {
-        return String(s)
-          .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-          .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       }
 
       fetch(REVIEWS_GET_URL)
         .then(function(r) { return r.json(); })
         .then(function(d) { renderReviews(d.reviews || []); })
-        .catch(function() { /* endpoint non configuré, affichage vide */ });
+        .catch(function() {});
 
-      // ── Soumission ──────────────────────────────────────────────────
       document.getElementById('review-form').addEventListener('submit', function(e) {
         e.preventDefault();
         var form = e.target;
-
-        // Honeypot
         if (form.website.value) return;
-
-        // Garde temporelle
         if (Date.now() - _pageLoadTime < GUARD_MS) return;
-
         var name    = form.name.value.trim();
         var comment = form.comment.value.trim();
         var config  = form.config ? form.config.value.trim() : '';
         var rating  = selectedRating || null;
-        var fb      = document.getElementById('review-feedback');
-
         if (!name || comment.length < MIN_CHARS) {
-          showFeedback('Prénom et commentaire (30 car. min) requis.', 'err');
+          showFeedback('First name and comment (30 char. min) required.', 'err');
           return;
         }
-
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Envoi…';
-
-        // mode no-cors requis pour Google Apps Script (pas de CORS headers sur doPost)
+        submitBtn.textContent = 'Sending…';
         fetch(REVIEWS_POST_URL, {
-          method:  'POST',
-          mode:    'no-cors',
+          method: 'POST', mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: name, comment: comment, config: config, rating: rating })
         })
         .then(function() {
-          showFeedback('Merci ! Votre avis sera publié après lecture (24–48 h).', 'ok');
-          form.reset();
-          selectedRating = 0;
-          highlightStars(0);
-          submitBtn.textContent = 'Avis envoyé ✓';
+          showFeedback('Thank you! Your review will be published after reading (24–48 h).', 'ok');
+          form.reset(); selectedRating = 0; highlightStars(0);
+          submitBtn.textContent = 'Review sent ✓';
         })
         .catch(function() {
-          showFeedback('Erreur réseau — réessayez dans un instant.', 'err');
+          showFeedback('Network error — please try again in a moment.', 'err');
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Envoyer l\'avis';
+          submitBtn.textContent = 'Submit review';
         });
       });
 
       function showFeedback(msg, type) {
         var fb = document.getElementById('review-feedback');
-        fb.textContent  = msg;
-        fb.className    = 'review-feedback ' + type;
-        fb.style.display = 'block';
+        fb.textContent = msg; fb.className = 'review-feedback ' + type; fb.style.display = 'block';
       }
-
     })();
 
     // ── Early-access banner ───────────────────────────────────────────
     (function() {
       var banner = document.getElementById('ea-banner');
       if (!banner) return;
-
-      var TOTAL = 25; // nombre total de places early access
-
+      var TOTAL = 25;
       function updateSpots(sold) {
         var remaining = Math.max(0, TOTAL - sold);
         var pct = Math.min(100, Math.round((sold / TOTAL) * 100));
         var txt = remaining > 0
-          ? remaining + ' place' + (remaining > 1 ? 's' : '') + ' restante' + (remaining > 1 ? 's' : '')
-          : 'Offre terminée';
-
+          ? remaining + ' spot' + (remaining > 1 ? 's' : '') + ' left'
+          : 'Offer ended';
         var eaFill  = document.getElementById('ea-fill');
         var eaLabel = document.getElementById('ea-spots-label');
         if (eaFill)  eaFill.style.width  = pct + '%';
         if (eaLabel) eaLabel.textContent  = txt;
-
         var pricingFill  = document.getElementById('pricing-fill');
         var pricingLabel = document.getElementById('pricing-spots-label');
         if (pricingFill)  pricingFill.style.width  = pct + '%';
         if (pricingLabel) pricingLabel.textContent  = txt;
       }
-
-      // Valeur par défaut affichée immédiatement
       updateSpots(0);
-
       fetch('https://eox4cwc7rkixiu6.m.pipedream.net')
         .then(function(r) { return r.json(); })
         .then(function(d) { updateSpots(d.count || 0); })
-        .catch(function() { /* garde la valeur par défaut */ });
-
-      document.getElementById('ea-close').addEventListener('click', function() {
-        banner.style.display = 'none';
-      });
+        .catch(function() {});
+      document.getElementById('ea-close').addEventListener('click', function() { banner.style.display = 'none'; });
     })();
 
-    // Toggle interactif / vidéo
+    // Toggle interactive / video
     var btnI = document.getElementById('btn-interactive');
     var btnV = document.getElementById('btn-video');
     var viewI = document.getElementById('view-interactive');
     var viewV = document.getElementById('view-video');
     var vid   = document.getElementById('demo-video');
-
     btnI.addEventListener('click', function() {
       viewI.style.display = ''; viewV.style.display = 'none';
-      btnI.classList.add('active'); btnV.classList.remove('active');
-      vid.pause();
+      btnI.classList.add('active'); btnV.classList.remove('active'); vid.pause();
     });
     btnV.addEventListener('click', function() {
       viewI.style.display = 'none'; viewV.style.display = '';
-      btnV.classList.add('active'); btnI.classList.remove('active');
-      vid.play();
+      btnV.classList.add('active'); btnI.classList.remove('active'); vid.play();
     });
   })();
 </script>
