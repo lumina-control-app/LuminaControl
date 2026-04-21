@@ -2014,7 +2014,7 @@
       // Valeur par défaut affichée immédiatement
       updateSpots(0);
 
-      fetch('https://script.google.com/macros/s/AKfycbwXNGmHCuJiBinxvPrZCNURWMQQgwVU-mgidA-KQfAttBvco3-aTY31jn4TiwYPZYRi/exec', { redirect: 'follow' })
+      fetch('https://script.google.com/macros/s/AKfycbyMVa1f9ShS2mQpdItu0Yc6hJUfv6ubaBH7tpZ3DGHjzSQXLHxWx9J5pD4iEGGr9L9rog/exec', { redirect: 'follow' })
         .then(function(r) { return r.json(); })
         .then(function(d) { updateSpots(d.count || 0); })
         .catch(function() { /* garde la valeur par défaut */ });
